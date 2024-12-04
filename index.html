@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>欢迎来到我的Blog</title>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow: hidden; /* 防止滚动条出现 */
+            }
+
+            #BackgroundVideo {
+                position: fixed; /* 使元素脱离文档流 */
+                right: 0; /* 确保元素在右下角 */
+                bottom: 0; /* 确保元素在右下角 */
+                min-width: 100%; /* 确保元素至少有最小宽度 */
+                min-height: 100%; /* 确保元素至少有最小高度 */
+                width: auto; /* 确保元素至少有最小宽度 */
+                height: auto; /* 确保元素至少有最小高度 */
+                z-index: -1; /* 确保元素在背景之下 */
+                /* 设置背景MP4，保证铺满页面 */
+            }
+
+            .content {
+                position: relative;
+                z-index: 1;
+                color: rgb(0, 81, 255);
+                text-align: center;
+                padding-top: 20%;
+            }
+
+    </style>
+    </head>
+
+        <div class="content">
+            <h1 style="text-align: center;">Welcome</h1>
+        </div>
+
+    </body>
+</html>>
