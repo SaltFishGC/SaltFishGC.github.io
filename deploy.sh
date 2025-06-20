@@ -3,6 +3,7 @@
 # 确保脚本抛出遇到的错误
 set -e
 
+# 这个模版和其他vuepress项目不太一样，注意.vuepress/dist的位置不同，不在docs目录下
 # 生成静态文件
 npm run build
 
