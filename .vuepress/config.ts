@@ -16,6 +16,11 @@ export default defineUserConfig({
     docsBranch: "main",
     docsDir: "example",
     lastUpdatedText: "",
+    head: [
+        [
+            'link', { rel: 'icon', href: '/logo.jng' }
+        ]
+    ],
     // series 为原 sidebar
     series: {
       "/docs/theme-reco/": [
