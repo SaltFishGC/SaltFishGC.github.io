@@ -6,7 +6,8 @@ modules:
   - MdContent
   - Footer
 bannerBrand:
-  bgImage: '/bg.svg'
+  # bgImage: '/bg.svg'
+  bgImage: '/abyss.png'
   title: SaltFishGC`s blog
   description: 蓝狗不知何时能写完-。-
   tagline: anyway，欢迎来到我的博客
