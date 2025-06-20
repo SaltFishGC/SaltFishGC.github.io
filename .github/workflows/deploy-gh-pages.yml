@@ -1,35 +1,41 @@
 name: Deploy to GitHub Pages
 
 on:
+  # 当推送到 main 分支时自动触发部署
   push:
     branches:
-      - main # 当推送到 main 分支时触发 CI/CD 流程
+      - main
+
+  # 也可以手动在 Actions 页面点击运行
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     steps:
-      - name: Checkout 源码
+      - name: 🚀 Checkout 源码
         uses: actions/checkout@v4
 
-      - name: 设置 Node.js 环境
+      - name: 🧱 设置 Node.js 环境
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # 根据你的项目需求选择版本
+          node-version: '18'
+          cache: 'npm'
 
-      - name: 安装 npm 依赖
+      - name: 📦 安装依赖
         run: npm install
 
-      - name: 构建 & 部署
-        run: |
-          npm run build
-          chmod +x deploy.sh # 给 deploy.sh 添加可执行权限
-          ./deploy.sh
+      - name: 🔧 构建项目
+        run: npm run build
 
-      - name: 推送 dist 到 gh-pages 分支
-        run: |
-          cd .vuepress/dist
-          git remote add origin-gh-pages git@github.com:SaltFishGC/SaltFishGC.github.io.git
-          git push -f origin-gh-pages main:gh-pages
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      - name: 🚀 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .vuepress/dist
+          publish_branch: gh-pages  # 可选，默认就是 gh-pages，可以省略
