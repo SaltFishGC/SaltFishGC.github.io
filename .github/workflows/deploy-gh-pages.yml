@@ -77,6 +77,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .vuepress/dist
-          external_repository: SaltFishGC/SaltFishGC.github.io # 如果需要推送到不同的仓库，请填写相应的仓库地址
           commit_message: 'Deploy to GitHub Pages'
           publish_branch: gh-pages  # 可选，默认就是 gh-pages，可以省略
