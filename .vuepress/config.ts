@@ -17,9 +17,7 @@ export default defineUserConfig({
     docsDir: "example",
     lastUpdatedText: "",
     head: [
-        [
-            'link', { rel: 'icon', href: '/logo.jng' }
-        ]
+      ['link', { rel: 'icon', href: '/favicon.ico' }]
     ],
     // series 为原 sidebar
     series: {
