@@ -1,19 +1,58 @@
+# name: Deploy to GitHub Pages
+
+# on:
+#   # 当推送到 main 分支时自动触发部署
+#   push:
+#     branches:
+#       - main
+
+#   # 也可以手动在 Actions 页面点击运行
+#   workflow_dispatch:
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#       pages: write
+#       id-token: write
+
+#     steps:
+#       - name: 🚀 Checkout 源码
+#         uses: actions/checkout@v4
+
+#       - name: 🧱 设置 Node.js 环境
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
+
+#       - name: 📦 安装依赖
+#         run: npm install
+
+#       - name: 🔧 构建项目
+#         run: npm run build
+
+#       - name: 🚀 部署到 GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: .vuepress/dist
+#           publish_branch: gh-pages  # 可选，默认就是 gh-pages，可以省略
+
 name: Deploy to GitHub Pages
 
 on:
-  # 当推送到 main 分支时自动触发部署
   push:
     branches:
       - main
-
-  # 也可以手动在 Actions 页面点击运行
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write # 修改为 write 权限
       pages: write
       id-token: write
 
@@ -38,4 +77,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .vuepress/dist
+          external_repository: SaltFishGC/SaltFishGC.github.io # 如果需要推送到不同的仓库，请填写相应的仓库地址
+          commit_message: 'Deploy to GitHub Pages'
           publish_branch: gh-pages  # 可选，默认就是 gh-pages，可以省略
