@@ -21,24 +21,58 @@ export default defineUserConfig({
     ],
     // series 为原 sidebar
     series: {
-      "/docs/theme-reco/": [
+      "/docs/wx/": [
         {
-          text: "module one",
-          children: ["home", "theme"],
-        },
-        {
-          text: "module two",
-          children: ["api", "plugin"],
-        },
-      ],
+          text: "仿wx",
+          children: [{
+            text: "常用命令",
+            children: ["常用命令"]
+          },
+          {
+            text: "前端部分",
+            children: [
+              "前端部分/Eletron速记",
+              "前端部分/WebSocket客户端",
+              "前端部分/nginx",
+              "前端部分/session，token，jwt",
+              "前端部分/sqlite本地缓存",
+              "前端部分/vue基本速记",
+              "前端部分/添加设计",
+              "前端部分/遇到的问题（前端"
+            ]
+          },
+          {
+            text: "后端部分",
+            children: [
+              "后端部分/Netty速记",
+              "后端部分/业务中学到的东西（后端",
+              "后端部分/修改设计（后端",
+              "后端部分/同样的业务场景，微信是怎么做的？",
+              "后端部分/对代码生成器的优化",
+              "后端部分/数据库和缓存存储形式整理",
+              "后端部分/遇到的问题（后端"
+            ]
+          }
+          ]
+        }
+
+      ]
     },
     navbar: [
       { text: "主页", link: "/" },
-      { text: "Blog", link: "/categories/reco/1.html" },
+      { text: "Blog", link: "/categories/blog/1.html" },
       {
         text: "笔记",
         children: [
-          { text: "vuepress-reco", link: "/docs/theme-reco/theme" },
+          {
+            text: "仿wx",
+            children: [
+              { text: "常用命令", link: "/docs/wx/常用命令" },
+              { text: "前端部分", link: "/docs/wx/前端部分/Eletron速记" },
+              { text: "后端部分", link: "/docs/wx/后端部分/Netty速记" }
+            ]
+          }
+
         ],
       },
     ],
