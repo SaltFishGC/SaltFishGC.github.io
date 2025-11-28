@@ -1,29 +1,23 @@
 ---
 title: Eletron速记
-date: 2025/11/3
-tags:
- - 笔记
- - 前端
- - Eletron
-categories:
- - notes
+date: 2025-11-28
 ---
+
+官方文档：[简介 | Electron](https://www.electronjs.org/zh/docs/latest/)/[介绍 | Electron 框架](https://electron.js.cn/docs/latest/)
 
 ### 渲染线程vue与主线程
 
 主线程才能和本地交互
 
-#### 渲染线程与主线程之间的交互
+ipcRenderer与ipcMain
 
-ipc
+**on**与**send**
 
-on与send
+需要回调函数且不需要返回值（异步即可）
 
-需要回调函数且不需要返回值
+**handle**与**invoke**（双向通信）
 
-handle与invoke（双向通信）
-
-需要返回值
+需要返回值（且请求线程会等待返回值，也就是说可以实现阻塞同步）
 
 如果是分开配置的，记得在主线程index里面导入ipc的方法
 
@@ -40,9 +34,69 @@ handle与invoke（双向通信）
 | ---------------------------------------------- | ------------------------------------ |
 | 获取数据（如读文件、查数据库）                 | ✅ `invoke` + `handle`                |
 | 触发操作但不需要返回值（如打开窗口、播放音乐） | ✅ `send` + `on`                      |
-| 通知类事件（如"用户登录了"）                   | ✅ `send` + `on`（主进程广播）        |
+| 通知类事件（如“用户登录了”）                   | ✅ `send` + `on`（主进程广播）        |
 | 需要等待结果的 UI 操作                         | ✅ `invoke` + `handle`                |
 | 实时通信、高频事件                             | ✅ `send` + `on`（避免 Promise 开销） |
+
+Electron主线程的`send`可以一次通知多个渲染进程。
+
+1. **使用`webContents.getAllWebContents()`遍历所有渲染进程**
+
+   ```javascript
+   const { webContents } = require('electron')
+   
+   // 向所有渲染进程发送消息
+   webContents.getAllWebContents().forEach(webContent => {
+     if (!webContent.isDestroyed()) {
+       webContent.send('channel-name', data)
+     }
+   })
+   ```
+   
+2. **使用`BrowserWindow.getAllWindows()`遍历所有窗口**
+
+   ```javascript
+   const { BrowserWindow } = require('electron')
+   
+   // 向所有窗口的渲染进程发送消息
+   BrowserWindow.getAllWindows().forEach(window => {
+     window.webContents.send('channel-name', data)
+   })
+   ```
+   
+3. **向特定频道的所有监听者广播**
+
+   ```javascript
+   // 可以在处理函数中向多个渲染进程发送消息
+   ipcMain.on('broadcast-message', (event, data) => {
+     BrowserWindow.getAllWindows().forEach(window => {
+       window.webContents.send('receive-broadcast', data)
+     })
+   })
+   ```
+
+注意主线程send需要指明对应的渲染线程的sender，渲染线程的多个组件共享来自主线程的消息
+
+#### 渲染线程与组件
+
+一个渲染线程其实就是一个vue实例，而一个vue实例中的所有组件都共用一个渲染线程（但注意！一个组件未打开时是无法接收主线程的消息的！所以对于公共的消息，请尽量使用一直在使用的组件来监听以防bug）
+
+#### 渲染线程（组件）之间的交互
+
+注意渲染线程之间是无法自动通信的（ipcRenderer之间无法通行），必须要通过主线程来进行信息转发传递，注意组件之间也是一样的！（当然组件之间可以通过父子参数，emit回调，pinia状态管理通信）
+
+可以选择以下方式来实现组件之间的交互
+
+1. **通过主进程中转** - 主进程负责消息路由
+2. **使用状态管理** - 如Pinia/Vuex统一管理状态
+3. **Vue事件总线** - 使用mitt等库实现组件间通信
+4. **props和emit** - 父子组件标准通信方式
+
+#### 渲染器与本地sqlite的交互
+
+通过主线程的方式来实现与本地sqlite数据库的交互（准备好jdbc模版以及DAO类，只需要调用方法即可实现数据的缓存）
+
+
 
 ### 零碎
 
@@ -130,3 +184,26 @@ export const useUserInfoStore = defineStore('userInfo', {
 ```
 
 注意和eletron的store区分，一个是主线程的，一个是渲染器线程的。
+
+#### dialog实现文件打开器
+
+```javascript
+/**
+ * 修改文件所在目录
+ */
+const changeLocalFolder = async () => {
+	let settingInfo = await selectSettingInfo(store.getUserId());
+	const sysSetting = JSON.parse(settingInfo.sysSetting);
+	let localFileFolder = sysSetting.localFileFolder;
+	const options = {
+		properties: ['openDirectory'],
+		defaultPath: localFileFolder
+	};
+	let result = await dialog.showOpenDialog(options);
+	if (result.canceled) {
+		return;
+	}
+};
+```
+
+使用dialog来打开文件选择器，其会返回选择的路径。

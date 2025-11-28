@@ -1,12 +1,7 @@
 ---
-title: nginx
-date: 2025/11/3
-tags:
- - 笔记
- - 前端
- - nginx
-categories:
- - notes
+title: NGINX
+date: 2025-11-28
 ---
 
 ### 反向代理
+

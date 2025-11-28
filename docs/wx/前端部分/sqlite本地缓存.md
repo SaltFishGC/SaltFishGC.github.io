@@ -1,12 +1,6 @@
 ---
 title: sqlite本地缓存
-date: 2025/11/3
-tags:
- - 笔记
- - 前端
- - sqlite
-categories:
- - notes
+date: 2025-11-28
 ---
 
 注意sqlite作为本地存储，vue是无法直接交互的，必须使用eletron的主线程提交sql

@@ -14,7 +14,7 @@ export default defineUserConfig({
     authorAvatar: "/doge.jpg",
     docsRepo: "https://github.com/SaltFishGC",
     docsBranch: "main",
-    docsDir: "example",
+    // docsDir: "example",
     lastUpdatedText: "",
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico' }]
@@ -37,7 +37,7 @@ export default defineUserConfig({
               "前端部分/session，token，jwt",
               "前端部分/sqlite本地缓存",
               "前端部分/vue基本速记",
-              "前端部分/添加设计",
+              "前端部分/修改设计",
               "前端部分/遇到的问题（前端"
             ]
           },
@@ -65,7 +65,7 @@ export default defineUserConfig({
         text: "笔记",
         children: [
           {
-            text: "仿wx",
+            text: "仿wx", link: "/docs/wx/常用命令",
             children: [
               { text: "常用命令", link: "/docs/wx/常用命令" },
               { text: "前端部分", link: "/docs/wx/前端部分/Eletron速记" },

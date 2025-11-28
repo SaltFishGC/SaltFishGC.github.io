@@ -1,14 +1,6 @@
 ---
 title: session，token，jwt
-date: 2025/11/3
-tags:
- - 笔记
- - 前端
- - session
- - token
- - jwt
-categories:
- - notes
+date: 2025-11-28
 ---
 
 它们的核心目标都是解决同一个问题：**如何在无状态的 HTTP 协议下，识别并保持用户的登录状态。**

@@ -1,12 +1,6 @@
 ---
 title: Netty速记
-date: 2025/11/3
-tags:
- - 笔记
- - 后端
- - Netty
-categories:
- - notes
+date: 2025-11-28
 ---
 
 ### 怎么实现的长连接？
@@ -22,3 +16,4 @@ categories:
 
 
 #### 利用Channel发送信息
+
