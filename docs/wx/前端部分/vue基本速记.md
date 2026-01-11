@@ -7,6 +7,12 @@ date: 2025-11-28
 
 
 
+### import
+
+js在完成import后就会立刻加载执行，因此ipc接口，axios拦截器等只要已经完成设置了，只要导入到项目的主入口（eletron中渲染线程的main，主线程的index等）就可以立刻完成配置。这样类似于模块化拆解代码
+
+
+
 ### debugger
 
  
