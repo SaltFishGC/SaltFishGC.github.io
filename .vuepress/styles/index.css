@@ -1,0 +1,133 @@
+/* 笔记部分样式重写 */
+/* 设置笔记部分左右边距为0 */
+.theme-container .theme-main {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+	max-width: none !important;
+}
+
+/* 设置上方导航栏的左边距为0 */
+.navbar-inner {
+  margin-left: 0 !important;
+	margin-right: 0 !important;
+	max-width: none !important;
+}
+
+/* 全局背景动画 */
+body {
+  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #2c3e50, #0f0c29);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  min-height: 100vh;
+  animation-direction: alternate;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 添加全局粒子效果 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 0, 0.1) 0%, transparent 20%);
+  animation: globalParticles 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes globalParticles {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-15%) translateX(10%);
+  }
+  50% {
+    transform: translateY(0) translateX(20%);
+  }
+  75% {
+    transform: translateY(10%) translateX(-10%);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* 为内容区域添加半透明背景以便文字更易阅读 */
+.theme-container:not(.home) {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* 炫酷的文章卡片效果 */
+.theme-container .card {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
+}
+
+.theme-container .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.4);
+}
+
+/* 为链接添加炫酷悬停效果 */
+a {
+  position: relative;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #ff00cc, #333399);
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* 炫酷滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff00cc, #333399);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #333399, #ff00cc);
+}

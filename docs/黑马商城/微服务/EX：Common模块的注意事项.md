@@ -5,7 +5,7 @@ date: 2026-2-10
 
 在微服务架构中，**`common` 模块（或叫 `shared` / `core` / `api`）** 是多个服务共享的代码库，用于避免重复定义。虽然它能提升开发效率，但**设计不当会严重破坏微服务的自治性、独立部署性和技术异构性**。
 
-### 推荐存放在common模块的内容
+## 推荐存放在common模块的内容
 
 | 类型                       | 示例                                | 说明                                              |
 | :------------------------- | :---------------------------------- | :------------------------------------------------ |
@@ -20,9 +20,9 @@ date: 2026-2-10
 
 
 
-### 需要注意的使用场景
+## 需要注意的使用场景
 
-#### pom引入依赖最小化-作用域provided
+### pom引入依赖最小化-作用域provided
 
 在引入依赖时尽量避免引入**可能不是必定需要**的依赖，即便引入也注意作用域，可以使用provided如：
 
@@ -62,7 +62,7 @@ date: 2026-2-10
 
 
 
-#### 引入公共配置Configuration
+### 引入公共配置Configuration
 
 当**需要统一管理多模块的一些配置Bean**时，我们可以考虑将配置类放到common中，但注意必须是**多模块中对应配置绝对得统一**才行，**如有可能会出现个性化配置的需求那么就避免使用common管理配置Bean！**
 
@@ -70,7 +70,7 @@ date: 2026-2-10
 
 那么在这时候我们会发现在common模块下写的配置类的包路径似乎并不会被其他引入common模块的模块启动类扫描到！这时候我们就需要通知其他模块，让他们扫描到这个包，获取其中的配置类并注入Bean到上下文中。那么这里我们有几种方法来实现这个通知：
 
-##### **通过** `spring.factories` **实现自动装配**
+#### **通过** `spring.factories` **实现自动装配**
 
  **▶ Spring Boot 2.x：**
 
@@ -107,7 +107,7 @@ com.yourcompany.common.config.CommonWebConfig
 
 ----
 
-##### **使用** `@ComponentScan` **显式指定包（不推荐）**
+#### **使用** `@ComponentScan` **显式指定包（不推荐）**
 
 ```java
 @SpringBootApplication
@@ -133,7 +133,7 @@ public class OrderServiceApplication {
 
 ----
 
-##### **使用** `@Import` **手动导入（折中）**
+#### **使用** `@Import` **手动导入（折中）**
 
 在每个服务的配置类中显式导入：
 
@@ -160,7 +160,7 @@ public class OrderServiceApplication { ... }
 
 ----
 
-##### **条件化自动装配（Conditional Auto-config）**
+#### **条件化自动装配（Conditional Auto-config）**
 
 我们在装配一些**统一配置类**的时候由于导入对应的依赖**作用域是provided的**（由于冲突等问题希望在运行时不一起启用），这时候就需要条件化自动装配：
 
@@ -185,7 +185,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 
 
-### 与父项目的区别
+## 与父项目的区别
 
 | 维度                     | 父项目（Parent POM）                     | `common`模块                            |
 | :----------------------- | :--------------------------------------- | :-------------------------------------- |
@@ -195,7 +195,7 @@ public class MvcConfig implements WebMvcConfigurer {
 | **包含内容**             | 依赖版本、插件配置、属性定义             | Java 类、工具类、DTO、配置类等          |
 | **运行时是否存在**       | ❌ 仅构建时生效                           | ✅ 打包进最终应用（除非 scope=provided） |
 
-#### 父模块作用：统一构建规范
+### 父模块作用：统一构建规范
 
 - 定义所有子模块共用的：
   - **依赖版本**（通过 `<dependencyManagement>`）
@@ -261,7 +261,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 
 
-#### common模块作用：共享可重用的 Java 代码
+### common模块作用：共享可重用的 Java 代码
 
 - 包含多个微服务都需要的：
   - 工具类（`DateUtils`, `IdGenerator`）

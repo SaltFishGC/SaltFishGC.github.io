@@ -14,6 +14,8 @@ export default defineUserConfig({
     docsBranch: "main",
     // docsDir: "example",
     lastUpdatedText: "",
+    colorMode: 'dark', // dark, light, 默认 auto
+    colorModeSwitch: false, // 是否展示颜色模式开关，默认 true
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico' }]
     ],
