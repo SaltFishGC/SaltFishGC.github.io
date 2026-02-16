@@ -13,13 +13,24 @@
 	max-width: none !important;
 }
 
-/* 全局背景动画 */
+/* 全局背景动画 - 日间模式 */
 body {
-  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #2c3e50, #0f0c29);
+  background: linear-gradient(45deg, #ffffff, #f0f0f0, #e0e0e0, #d0d0d0, #ffffff);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
   min-height: 100vh;
   animation-direction: alternate;
+}
+
+/* 夜间模式下的全局背景动画 */
+html[data-theme="dark"] body,
+html.dark body,
+body.dark {
+  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #2c3e50, #0f0c29) !important;
+  background-size: 400% 400% !important;
+  animation: gradientBG 15s ease infinite !important;
+  min-height: 100vh !important;
+  animation-direction: alternate !important;
 }
 
 @keyframes gradientBG {
@@ -34,7 +45,7 @@ body {
   }
 }
 
-/* 添加全局粒子效果 */
+/* 添加全局粒子效果 - 两种模式下都保留 */
 body::before {
   content: "";
   position: fixed;
@@ -44,11 +55,21 @@ body::before {
   height: 100%;
   z-index: -1;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 50% 30%, rgba(255, 255, 0, 0.1) 0%, transparent 20%);
+    radial-gradient(circle at 10% 20%, rgba(100, 100, 255, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(100, 255, 255, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 50% 30%, rgba(255, 200, 100, 0.05) 0%, transparent 20%);
   animation: globalParticles 20s linear infinite;
   pointer-events: none;
+}
+
+/* 夜间模式下的粒子效果增强 */
+html[data-theme="dark"] body::before,
+html.dark body::before,
+body.dark::before {
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 0, 0.1) 0%, transparent 20%) !important;
 }
 
 @keyframes globalParticles {
@@ -69,7 +90,7 @@ body::before {
   }
 }
 
-/* 为内容区域添加半透明背景以便文字更易阅读 */
+/* 为内容区域添加半透明背景以便文字更易阅读 - 两种模式下都保留 */
 .theme-container:not(.home) {
   background-color: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(10px);
@@ -77,7 +98,14 @@ body::before {
   padding: 20px;
 }
 
-/* 炫酷的文章卡片效果 */
+/* 夜间模式下内容区域背景调整 */
+html[data-theme="dark"] .theme-container:not(.home),
+html.dark .theme-container:not(.home),
+body.dark .theme-container:not(.home) {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 炫酷的文章卡片效果 - 两种模式下都保留 */
 .theme-container .card {
   background: rgba(255, 255, 255, 0.15) !important;
   backdrop-filter: blur(10px);
@@ -92,7 +120,22 @@ body::before {
   box-shadow: 0 12px 40px rgba(31, 38, 135, 0.4);
 }
 
-/* 为链接添加炫酷悬停效果 */
+/* 夜间模式下卡片效果调整 */
+html[data-theme="dark"] .theme-container .card,
+html.dark .theme-container .card,
+body.dark .theme-container .card {
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+html[data-theme="dark"] .theme-container .card:hover,
+html.dark .theme-container .card:hover,
+body.dark .theme-container .card:hover {
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5) !important;
+}
+
+/* 为链接添加炫酷悬停效果 - 两种模式下都保留 */
 a {
   position: relative;
 }
@@ -112,14 +155,21 @@ a:hover::after {
   width: 100%;
 }
 
-/* 炫酷滚动条样式 */
+/* 夜间模式下链接效果调整 */
+html[data-theme="dark"] a::after,
+html.dark a::after,
+body.dark a::after {
+  background: linear-gradient(to right, #ff6bff, #6b6bb9) !important;
+}
+
+/* 炫酷滚动条样式 - 两种模式下都保留 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(200, 200, 200, 0.1);
   border-radius: 10px;
 }
 
@@ -130,4 +180,188 @@ a:hover::after {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(45deg, #333399, #ff00cc);
+}
+
+/* 夜间模式下滚动条样式调整 */
+html[data-theme="dark"] ::-webkit-scrollbar-track,
+html.dark ::-webkit-scrollbar-track,
+body.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb,
+html.dark ::-webkit-scrollbar-thumb,
+body.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff00cc, #333399) !important;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover,
+html.dark ::-webkit-scrollbar-thumb:hover,
+body.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #333399, #ff00cc) !important;
+}
+
+/* Banner效果 - 两种模式下都保留，限制在父容器内 */
+.banner-brand__wrapper {
+  background: linear-gradient(45deg, #ffffff, #f0f0f0, #e0e0e0, #d0d0d0, #ffffff) !important;
+  background-size: 400% 400% !important;
+  animation: rainbowGradient 8s ease infinite !important;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 夜间模式下的Banner效果 */
+html[data-theme="dark"] .banner-brand__wrapper,
+html.dark .banner-brand__wrapper,
+body.dark .banner-brand__wrapper {
+  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #2c3e50, #0f0c29) !important;
+}
+
+.banner-brand__wrapper::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(100, 100, 200, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(100, 200, 200, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(200, 200, 100, 0.05) 0%, transparent 50%) !important;
+  animation: particleMove 15s linear infinite !important;
+  pointer-events: none !important;
+  box-sizing: border-box !important;
+}
+
+/* 夜间模式下的Banner粒子效果 */
+html[data-theme="dark"] .banner-brand__wrapper::before,
+html.dark .banner-brand__wrapper::before,
+body.dark .banner-brand__wrapper::before {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
+}
+
+@keyframes rainbowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes particleMove {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10%) translateX(5%);
+  }
+  50% {
+    transform: translateY(0) translateX(10%);
+  }
+  75% {
+    transform: translateY(5%) translateX(-5%);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* 确保home-wrapper也有适当的样式 */
+.home-wrapper {
+  overflow: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 主页炫酷背景效果 */
+.theme-container.home {
+  background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3) !important;
+  background-size: 600% 600% !important;
+  animation: homeRainbowGradient 12s ease infinite !important;
+  min-height: 100vh !important;
+  position: relative !important;
+}
+
+/* 主页背景动画 */
+@keyframes homeRainbowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 夜间模式下的主页背景 */
+html[data-theme="dark"] .theme-container.home,
+html.dark .theme-container.home,
+body.dark .theme-container.home {
+  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #2c3e50, #0f0c29) !important;
+  background-size: 600% 600% !important;
+  animation: homeRainbowGradient 12s ease infinite !important;
+}
+
+/* 主页粒子效果 */
+.theme-container.home::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 60% 20%, rgba(255, 100, 100, 0.08) 0%, transparent 30%),
+    radial-gradient(circle at 30% 80%, rgba(100, 255, 100, 0.08) 0%, transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(100, 100, 255, 0.08) 0%, transparent 30%) !important;
+  animation: homeParticleMove 20s linear infinite !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* 夜间模式下的主页粒子效果 */
+html[data-theme="dark"] .theme-container.home::before,
+html.dark .theme-container.home::before,
+body.dark .theme-container.home::before {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 60% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 30%),
+    radial-gradient(circle at 30% 80%, rgba(64, 224, 208, 0.1) 0%, transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(72, 61, 139, 0.1) 0%, transparent 30%) !important;
+}
+
+@keyframes homeParticleMove {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10%) translateX(5%);
+  }
+  50% {
+    transform: translateY(0) translateX(10%);
+  }
+  75% {
+    transform: translateY(5%) translateX(-5%);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }
