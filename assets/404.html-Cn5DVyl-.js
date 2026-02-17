@@ -1,0 +1,1 @@
+import{ar as e,as as a,au as n,at as o}from"./app-DXmPnZac.js";const r={};function l(s,t){return o(),a("div",null,[...t[0]||(t[0]=[n("p",null,"404 Not Found",-1)])])}const u=e(r,[["render",l]]),d=JSON.parse('{"path":"/404.html","title":"","lang":"en-US","frontmatter":{"layout":"NotFound"},"headers":[],"git":{},"filePathRelative":null}');export{u as comp,d as data};
