@@ -1,10 +1,15 @@
 import { defineUserConfig } from "vuepress";
 import recoTheme from "vuepress-theme-reco";
 import { viteBundler } from '@vuepress/bundler-vite';
+import { mermaidPlugin } from './plugins/mermaid'
 
 export default defineUserConfig({
   title: "SaltFishGC`s Blog",
   bundler: viteBundler(),
+  plugins: [
+    // 其他插件...
+    mermaidPlugin
+  ],
   // bundler: webpackBundler(),
   theme: recoTheme({
     logo: "/doge.jpg",
@@ -180,9 +185,9 @@ export default defineUserConfig({
       {
         text: "笔记",
         children: [
-          {text: "仿wx", link: "/docs/wx/常用命令"},
-          {text: "黑马点评", link: "/docs/黑马点评/项目相关/简介"},
-          {text: "黑马商城", link: "/docs/黑马商城/Docker/1.简介"}
+          { text: "仿wx", link: "/docs/wx/常用命令" },
+          { text: "黑马点评", link: "/docs/黑马点评/项目相关/简介" },
+          { text: "黑马商城", link: "/docs/黑马商城/Docker/1.简介" }
         ],
       },
     ],

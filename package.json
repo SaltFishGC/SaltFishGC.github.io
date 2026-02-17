@@ -11,6 +11,7 @@
     "build": "vuepress build ."
   },
   "dependencies": {
+    "mermaid": "^11.12.2",
     "vue": "^3.4.21",
     "vuepress": "^2.0.0-rc.19",
     "vuepress-theme-reco": "^2.0.0-rc.26"

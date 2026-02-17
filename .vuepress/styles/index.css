@@ -147,7 +147,7 @@ a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(to right, #ff00cc, #333399);
+  background: linear-gradient(to right, #808080, #373737);
   transition: width 0.3s ease;
 }
 
@@ -168,18 +168,21 @@ body.dark a::after {
   height: 8px;
 }
 
+/* 滚动条轨道样式 */
 ::-webkit-scrollbar-track {
   background: rgba(200, 200, 200, 0.1);
   border-radius: 10px;
 }
 
+/* 滚动条默认样式 */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ff00cc, #333399);
+  background: linear-gradient(45deg, #5b5b5b, #7c7c7c); 
   border-radius: 10px;
 }
 
+/* 鼠标悬停时滚动条样式 */
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #333399, #ff00cc);
+  background: linear-gradient(45deg, #7e7e7e, #000000); 
 }
 
 /* 夜间模式下滚动条样式调整 */
@@ -199,18 +202,6 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover,
 html.dark ::-webkit-scrollbar-thumb:hover,
 body.dark ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(45deg, #333399, #ff00cc) !important;
-}
-
-/* Banner效果 - 两种模式下都保留，限制在父容器内 */
-.banner-brand__wrapper {
-  background: linear-gradient(45deg, #ffffff, #f0f0f0, #e0e0e0, #d0d0d0, #ffffff) !important;
-  background-size: 400% 400% !important;
-  animation: rainbowGradient 8s ease infinite !important;
-  position: relative !important;
-  overflow: hidden !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
 }
 
 /* 夜间模式下的Banner效果 */
@@ -364,4 +355,20 @@ body.dark .theme-container.home::before {
   100% {
     transform: translateY(0) translateX(0);
   }
+}
+
+/* 强制所有表格数据单元格显示边框 */
+table tr td {
+  border: 1px solid #c2c2c2 !important; /* 日间模式：深色边框 */
+}
+
+/* 夜间模式下的表格数据边框 */
+html[data-theme='dark'] table tr td,
+.dark table tr td {
+  border: 1px solid #b3b3b3 !important; /* 夜间模式：浅色边框 */
+}
+
+/* 设置表格边框合并属性 */
+table {
+  border-collapse: collapse !important;
 }
