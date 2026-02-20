@@ -1,0 +1,1 @@
+import{ar as t,as as e,at as a}from"./app-BEAZiIq9.js";const r={};function o(n,s){return a(),e("div")}const l=t(r,[["render",o]]),_=JSON.parse('{"path":"/tags/boke/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,_ as data};

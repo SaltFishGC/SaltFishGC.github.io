@@ -1,0 +1,1 @@
+import{ar as t,as as e,at as a}from"./app-BEAZiIq9.js";const s={};function o(r,n){return a(),e("div")}const l=t(s,[["render",o]]),_=JSON.parse('{"path":"/posts/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Posts"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,_ as data};

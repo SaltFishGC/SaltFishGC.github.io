@@ -1,1 +1,0 @@
-import{ar as t,as as e,at as a}from"./app-DXmPnZac.js";const r={};function o(c,n){return a(),e("div")}const l=t(r,[["render",o]]),i=JSON.parse('{"path":"/categories/blog/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,i as data};

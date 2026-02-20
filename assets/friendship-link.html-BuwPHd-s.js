@@ -1,0 +1,1 @@
+import{ar as e,as as t,at as n}from"./app-BEAZiIq9.js";const a={};function r(i,s){return n(),t("div")}const o=e(a,[["render",r]]),l=JSON.parse('{"path":"/friendship-link.html","title":"","lang":"en-US","frontmatter":{"layout":"FriendshipLink"},"headers":[],"git":{},"filePathRelative":null}');export{o as comp,l as data};
