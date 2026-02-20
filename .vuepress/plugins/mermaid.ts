@@ -1,6 +1,8 @@
 // 准备了一个插件用于拦截接收代码块fence
-// 然后将代码块内容进行过滤等处理
-// 然后将内容传给客户端处理器交给mermaid组件进行渲染
+// 然后将代码块内容进行过滤等处理得到一个mermaid代码字符串
+// 然后准备一个组件MermaidDiagram接收这个字符串并进行渲染(mermaid.client.ts)
+// 组件MermaidDiagram挂载在vue的dom中作为全局组件
+// MermaidDiagram获取到字符串后会使用mermaid库进行渲染
 // 最终返回一个自定义样式等属性的svg图
 
 // vuepress插件api说明:https://v2.vuepress.vuejs.org/zh/reference/plugin-api.html
