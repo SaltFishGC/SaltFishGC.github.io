@@ -32,12 +32,14 @@ export default defineUserConfig({
           collapsible: false,
           children: [{
             text: "常用命令",
-            children: ["wx/常用命令"]
+            children: ["wx/常用命令", "wx/项目总结"]
           },
           {
             text: "前端部分",
             children: [
               "wx/前端部分/Eletron速记",
+              "wx/前端部分/WebRTC",
+              "wx/前端部分/WebRTC实现多端消息同步",
               "wx/前端部分/WebSocket客户端",
               "wx/前端部分/nginx",
               "wx/前端部分/session，token，jwt",
@@ -50,131 +52,156 @@ export default defineUserConfig({
           {
             text: "后端部分",
             children: [
+              "wx/后端部分/MQ优化数据库写入",
               "wx/后端部分/Netty速记",
+              "wx/后端部分/OSS",
+              "wx/后端部分/WebRTC",
               "wx/后端部分/业务中学到的东西（后端",
               "wx/后端部分/修改设计（后端",
+              "wx/后端部分/加密与解密",
               "wx/后端部分/同样的业务场景，微信是怎么做的？",
               "wx/后端部分/对代码生成器的优化",
               "wx/后端部分/数据库和缓存存储形式整理",
+              "wx/后端部分/离线消息推送",
               "wx/后端部分/遇到的问题（后端"
             ]
           }
           ]
         },
         {
-          text: "黑马点评",
+          text: "Redis专项",
           collapsible: false,
           children: [
             {
               text: "项目相关",
               children: [
-                "黑马点评/项目相关/简介",
-                "黑马点评/项目相关/常用命令",
-                "黑马点评/项目相关/包装简历"
+                "Redis专项/项目相关/简介",
+                "Redis专项/项目相关/常用命令",
+                "Redis专项/项目相关/包装简历"
               ]
             },
             {
               text: "业务设计",
               children: [
-                "黑马点评/业务设计/1.短信登录",
-                "黑马点评/业务设计/2.缓存",
-                "黑马点评/业务设计/3.优惠券秒杀",
-                "黑马点评/业务设计/4.分布式锁(Redisson)",
-                "黑马点评/业务设计/5.秒杀优化",
-                "黑马点评/业务设计/6.Redis消息队列",
-                "黑马点评/业务设计/7.达人探店",
-                "黑马点评/业务设计/8.好友关注",
-                "黑马点评/业务设计/9.附件商铺",
-                "黑马点评/业务设计/10.用户签到",
-                "黑马点评/业务设计/11.uv统计"
+                "Redis专项/业务设计/1.短信登录",
+                "Redis专项/业务设计/2.缓存",
+                "Redis专项/业务设计/3.优惠券秒杀",
+                "Redis专项/业务设计/4.分布式锁(Redisson)",
+                "Redis专项/业务设计/5.秒杀优化",
+                "Redis专项/业务设计/6.Redis消息队列",
+                "Redis专项/业务设计/7.达人探店",
+                "Redis专项/业务设计/8.好友关注",
+                "Redis专项/业务设计/9.附件商铺",
+                "Redis专项/业务设计/10.用户签到",
+                "Redis专项/业务设计/11.uv统计"
               ]
             },
             {
               text: "高级篇",
               children: [
-                "黑马点评/高级篇/1.分布式缓存",
-                "黑马点评/高级篇/2.多级缓存",
-                "黑马点评/高级篇/3.最佳实践",
-                "黑马点评/高级篇/Redis存在的问题"
+                "Redis专项/高级篇/1.分布式缓存",
+                "Redis专项/高级篇/2.多级缓存",
+                "Redis专项/高级篇/3.最佳实践",
+                "Redis专项/高级篇/Redis存在的问题"
               ]
             },
             {
               text: "原理八股文",
               children: [
-                "黑马点评/原理八股文/网络模型",
-                "黑马点评/原理八股文/数据结构",
-                "黑马点评/原理八股文/内存汰换",
-                "黑马点评/原理八股文/通信协议"
+                "Redis专项/原理八股文/网络模型",
+                "Redis专项/原理八股文/数据结构",
+                "Redis专项/原理八股文/内存汰换",
+                "Redis专项/原理八股文/通信协议"
               ]
             },
             {
               text: "应用知识",
               children: [
-                "黑马点评/应用知识/Redis特性",
-                "黑马点评/应用知识/常见业务问题及八股文",
-                "黑马点评/应用知识/杂七杂八的异常"
+                "Redis专项/应用知识/Redis特性",
+                "Redis专项/应用知识/常见业务问题及八股文",
+                "Redis专项/应用知识/杂七杂八的异常"
               ]
             },
             {
               text: "对脚手架的更新",
               children: [
-                "黑马点评/对脚手架的更新/对RedisUtil的更新"
+                "Redis专项/对脚手架的更新/对RedisUtil的更新"
               ]
             }
           ]
         },
         {
-          text: "黑马商城",
+          text: "SrpingCloud",
           collapsible: false,
           children: [
             {
               text: "Docker",
               children: [
-                "黑马商城/Docker/1.简介",
-                "黑马商城/Docker/2.自定义容器",
-                "黑马商城/Docker/3.应用部署",
-                "黑马商城/Docker/4.容器间通信"
+                "SrpingCloud/Docker/1.简介",
+                "SrpingCloud/Docker/2.自定义容器",
+                "SrpingCloud/Docker/3.应用部署",
+                "SrpingCloud/Docker/4.容器间通信"
               ]
             },
             {
               text: "MybatisPlus",
               children: [
-                "黑马商城/MybatisPlus/1.简介",
-                "黑马商城/MybatisPlus/2.Wrapper",
-                "黑马商城/MybatisPlus/3.结合Wrapper和mapper",
-                "黑马商城/MybatisPlus/4.自制SQL",
-                "黑马商城/MybatisPlus/5.IService",
-                "黑马商城/MybatisPlus/6.IService的lambda链式调用",
-                "黑马商城/MybatisPlus/7.IService的批量插入",
-                "黑马商城/MybatisPlus/8.分页插件",
-                "黑马商城/MybatisPlus/9.额外功能"
+                "SrpingCloud/MybatisPlus/1.简介",
+                "SrpingCloud/MybatisPlus/2.Wrapper",
+                "SrpingCloud/MybatisPlus/3.结合Wrapper和mapper",
+                "SrpingCloud/MybatisPlus/4.自制SQL",
+                "SrpingCloud/MybatisPlus/5.IService",
+                "SrpingCloud/MybatisPlus/6.IService的lambda链式调用",
+                "SrpingCloud/MybatisPlus/7.IService的批量插入",
+                "SrpingCloud/MybatisPlus/8.分页插件",
+                "SrpingCloud/MybatisPlus/9.额外功能"
               ]
             },
             {
               text: "八股",
               children: [
-                "黑马商城/八股/1.Spring",
-                "黑马商城/八股/2.JWT",
-                "黑马商城/八股/3.微服务"
+                "SrpingCloud/八股/1.Spring",
+                "SrpingCloud/八股/2.JWT",
+                "SrpingCloud/八股/3.微服务"
               ]
             },
             {
               text: "微服务",
               children: [
-                "黑马商城/微服务/1.部署原项目",
-                "黑马商城/微服务/2.项目初步认识",
-                "黑马商城/微服务/3.服务管理（注册中心Nacos）",
-                "黑马商城/微服务/4.远程调用（OpenFeign）",
-                "黑马商城/微服务/5.微服务网关（Gateway）",
-                "黑马商城/微服务/6.配置管理（配置中心Nacos）",
-                "黑马商城/微服务/7.服务保护（Sentinel熔断限流）",
-                "黑马商城/微服务/8.分布式事务（Seata）",
-                "黑马商城/微服务/9.消息队列（MQ）",
-                "黑马商城/微服务/10.ElasticSearch",
-                "黑马商城/微服务/EX：Common模块的注意事项",
-                "黑马商城/微服务/EX：链路追踪"
+                "SrpingCloud/微服务/1.部署原项目",
+                "SrpingCloud/微服务/2.项目初步认识",
+                "SrpingCloud/微服务/3.服务管理（注册中心Nacos）",
+                "SrpingCloud/微服务/4.远程调用（OpenFeign）",
+                "SrpingCloud/微服务/5.微服务网关（Gateway）",
+                "SrpingCloud/微服务/6.配置管理（配置中心Nacos）",
+                "SrpingCloud/微服务/7.服务保护（Sentinel熔断限流）",
+                "SrpingCloud/微服务/8.分布式事务（Seata）",
+                "SrpingCloud/微服务/9.消息队列（MQ）",
+                "SrpingCloud/微服务/10.ElasticSearch",
+                "SrpingCloud/微服务/EX：Common模块的注意事项",
+                "SrpingCloud/微服务/EX：链路追踪"
               ]
             }
+          ]
+        },
+        {
+          text: "langchain4j",
+          collapsible: false,
+          children: [
+            "langchain4j/1.简要介绍",
+            "langchain4j/2.大模型",
+            "langchain4j/3.简单使用LLM",
+            "langchain4j/4.高级方式",
+            "langchain4j/5.配置总结",
+            "langchain4j/6.自制本地项目"
+          ]
+        },
+        {
+          text: "测试",
+          collapsible: false,
+          children: [
+            "测试/Jmeter",
+            "测试/Pytest"
           ]
         }
       ],
@@ -186,8 +213,10 @@ export default defineUserConfig({
         text: "笔记",
         children: [
           { text: "仿wx", link: "/docs/wx/常用命令" },
-          { text: "黑马点评", link: "/docs/黑马点评/项目相关/简介" },
-          { text: "黑马商城", link: "/docs/黑马商城/Docker/1.简介" }
+          { text: "Redis专项", link: "/docs/Redis专项/项目相关/简介" },
+          { text: "SrpingCloud", link: "/docs/SrpingCloud/Docker/1.简介" },
+          { text: "langchain4j", link: "/docs/langchain4j/1.简要介绍" },
+          { text: "测试", link: "/docs/测试/Jmeter" }
         ],
       },
     ],
