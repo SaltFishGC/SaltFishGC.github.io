@@ -131,55 +131,59 @@ export default defineUserConfig({
           ]
         },
         {
-          text: "SrpingCloud",
+          text: "SpingCloud",
           collapsible: false,
           children: [
             {
               text: "Docker",
               children: [
-                "SrpingCloud/Docker/1.简介",
-                "SrpingCloud/Docker/2.自定义容器",
-                "SrpingCloud/Docker/3.应用部署",
-                "SrpingCloud/Docker/4.容器间通信"
+                "SpingCloud/Docker/1.简介",
+                "SpingCloud/Docker/2.自定义容器",
+                "SpingCloud/Docker/3.应用部署",
+                "SpingCloud/Docker/4.容器间通信"
               ]
             },
             {
               text: "MybatisPlus",
               children: [
-                "SrpingCloud/MybatisPlus/1.简介",
-                "SrpingCloud/MybatisPlus/2.Wrapper",
-                "SrpingCloud/MybatisPlus/3.结合Wrapper和mapper",
-                "SrpingCloud/MybatisPlus/4.自制SQL",
-                "SrpingCloud/MybatisPlus/5.IService",
-                "SrpingCloud/MybatisPlus/6.IService的lambda链式调用",
-                "SrpingCloud/MybatisPlus/7.IService的批量插入",
-                "SrpingCloud/MybatisPlus/8.分页插件",
-                "SrpingCloud/MybatisPlus/9.额外功能"
+                "SpingCloud/MybatisPlus/1.简介",
+                "SpingCloud/MybatisPlus/2.Wrapper",
+                "SpingCloud/MybatisPlus/3.结合Wrapper和mapper",
+                "SpingCloud/MybatisPlus/4.自制SQL",
+                "SpingCloud/MybatisPlus/5.IService",
+                "SpingCloud/MybatisPlus/6.IService的lambda链式调用",
+                "SpingCloud/MybatisPlus/7.IService的批量插入",
+                "SpingCloud/MybatisPlus/8.分页插件",
+                "SpingCloud/MybatisPlus/9.额外功能"
               ]
             },
             {
               text: "八股",
               children: [
-                "SrpingCloud/八股/1.Spring",
-                "SrpingCloud/八股/2.JWT",
-                "SrpingCloud/八股/3.微服务"
+                "SpingCloud/八股/1.Spring",
+                "SpingCloud/八股/2.JWT",
+                "SpingCloud/八股/3.分布式事务",
+                "SpingCloud/八股/3.微服务",
+                "SpingCloud/八股/4.注册中心",
+                "SpingCloud/八股/5.远程调用",
+                "SpingCloud/八股/6.服务保护"
               ]
             },
             {
               text: "微服务",
               children: [
-                "SrpingCloud/微服务/1.部署原项目",
-                "SrpingCloud/微服务/2.项目初步认识",
-                "SrpingCloud/微服务/3.服务管理（注册中心Nacos）",
-                "SrpingCloud/微服务/4.远程调用（OpenFeign）",
-                "SrpingCloud/微服务/5.微服务网关（Gateway）",
-                "SrpingCloud/微服务/6.配置管理（配置中心Nacos）",
-                "SrpingCloud/微服务/7.服务保护（Sentinel熔断限流）",
-                "SrpingCloud/微服务/8.分布式事务（Seata）",
-                "SrpingCloud/微服务/9.消息队列（MQ）",
-                "SrpingCloud/微服务/10.ElasticSearch",
-                "SrpingCloud/微服务/EX：Common模块的注意事项",
-                "SrpingCloud/微服务/EX：链路追踪"
+                "SpingCloud/微服务/1.部署原项目",
+                "SpingCloud/微服务/2.项目初步认识",
+                "SpingCloud/微服务/3.服务管理（注册中心Nacos）",
+                "SpingCloud/微服务/4.远程调用（OpenFeign）",
+                "SpingCloud/微服务/5.微服务网关（Gateway）",
+                "SpingCloud/微服务/6.配置管理（配置中心Nacos）",
+                "SpingCloud/微服务/7.服务保护（Sentinel熔断限流）",
+                "SpingCloud/微服务/8.分布式事务（Seata）",
+                "SpingCloud/微服务/9.消息队列（MQ）",
+                "SpingCloud/微服务/10.ElasticSearch",
+                "SpingCloud/微服务/EX：Common模块的注意事项",
+                "SpingCloud/微服务/EX：链路追踪"
               ]
             }
           ]
@@ -203,6 +207,22 @@ export default defineUserConfig({
             "测试/Jmeter",
             "测试/Pytest"
           ]
+        },
+        {
+          text: "若智idea",
+          collapsible: false,
+          children: [
+            "若智idea/安排",
+            "若智idea/comfyui研究报告",
+            "若智idea/erp结合langchain4j",
+            "若智idea/godot跑团小游戏",
+            "若智idea/seedance2.0封装网站",
+            "若智idea/做一个测试框架",
+            "若智idea/同花顺api研究报告",
+            "若智idea/基于Redis的类爱发电项目",
+            "若智idea/小说助手 文生文ai网站",
+            "若智idea/用Qt实现一个开发助手"
+          ]
         }
       ],
     },
@@ -214,9 +234,10 @@ export default defineUserConfig({
         children: [
           { text: "仿wx", link: "/docs/wx/常用命令" },
           { text: "Redis专项", link: "/docs/Redis专项/项目相关/简介" },
-          { text: "SrpingCloud", link: "/docs/SrpingCloud/Docker/1.简介" },
+          { text: "SpingCloud", link: "/docs/SpingCloud/Docker/1.简介" },
           { text: "langchain4j", link: "/docs/langchain4j/1.简要介绍" },
-          { text: "测试", link: "/docs/测试/Jmeter" }
+          { text: "测试", link: "/docs/测试/Jmeter" },
+          { text: "若智idea", link: "/docs/若智idea/安排" }
         ],
       },
     ],
