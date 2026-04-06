@@ -12,6 +12,7 @@ date: 2026-3-24
 
 - 研究一下SillyTavern，学一下他的大模型在剧本方面使用[安装指南 | SillyTavern傻酒馆中文文档](https://sillytavern.wiki/installation/)
 - 研究一下文生图（当然一般还是让用户自己输入apikey）
+- 研究一下上下文的节流token/最大长度拉伸方案
 
 ## 初步设计
 
@@ -25,3 +26,4 @@ p2p联机，仅提供大厅
 
 ai根据跑团剧本决定下一个剧情
 
+可以和AI KP声明错误以进行剧情修正/变为自己想要的剧情
