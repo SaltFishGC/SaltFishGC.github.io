@@ -1,0 +1,1 @@
+import{ar as t,as as a,at as e}from"./app-FHtMccAj.js";const n={};function r(c,o){return e(),a("div")}const l=t(n,[["render",r]]),i=JSON.parse('{"path":"/tags/Langchain4j/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,i as data};
