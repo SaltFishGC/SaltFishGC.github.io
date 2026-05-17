@@ -1,0 +1,1 @@
+import{ar as t,as as e,at as a}from"./app-DIQg4MyL.js";const r={};function n(o,s){return a(),e("div")}const l=t(r,[["render",n]]),_=JSON.parse('{"path":"/tags/ERP/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,_ as data};

@@ -1,0 +1,1 @@
+import{ar as t,as as e,at as a}from"./app-DIQg4MyL.js";const r={};function s(n,o){return a(),e("div")}const l=t(r,[["render",s]]),i=JSON.parse('{"path":"/tags/shixi/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,i as data};
