@@ -1,0 +1,152 @@
+.theme-container {
+  min-height: 100dvh;
+  position: relative;
+}
+
+.theme-container .theme-main {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: var(--space-4) !important;
+  box-sizing: border-box;
+}
+
+.navbar-inner {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 var(--space-6) !important;
+  box-sizing: border-box;
+}
+
+.theme-default-content:not(.custom) {
+  max-width: var(--content-max);
+}
+
+.home-wrapper {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.theme-container .theme-main .series-container {
+  position: sticky !important;
+  top: 4rem !important;
+  height: calc(100vh - 4rem - var(--space-8)) !important;
+  max-height: calc(100vh - 4rem - var(--space-8)) !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 280px !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  padding: var(--space-5) var(--space-3) !important;
+  z-index: 40 !important;
+  transform: none !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.theme-container .theme-main .page-container {
+  display: flex !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: 0 !important;
+  gap: var(--space-6) !important;
+}
+
+.theme-container .theme-main .page-container .page-catalog-container {
+  position: sticky !important;
+  top: 4rem !important;
+  height: calc(100vh - 4rem - var(--space-8)) !important;
+  max-height: calc(100vh - 4rem - var(--space-8)) !important;
+  width: auto !important;
+  min-width: 160px !important;
+  max-width: 240px !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  padding: var(--space-5) var(--space-3) !important;
+  z-index: 10 !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.theme-container .theme-main .page-container .page-content {
+  flex: 1 1 0% !important;
+  min-width: 400px !important;
+  max-width: none !important;
+  margin: var(--space-8) var(--space-10) !important;
+  overflow-wrap: break-word;
+  padding-left: var(--space-10) !important;
+  padding-right: var(--space-10) !important;
+  padding-top: var(--space-8) !important;
+  padding-bottom: var(--space-12) !important;
+  box-sizing: border-box;
+  background: rgba(248, 248, 251, 0.7);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.theme-container .theme-main .page-container .page-content .theme-reco-md-content {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 1280px) {
+  .theme-container .theme-main .page-container .page-content {
+    min-width: 320px !important;
+    margin: var(--space-4) var(--space-6) !important;
+    padding-left: var(--space-6) !important;
+    padding-right: var(--space-6) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-inner {
+    padding: 0 var(--space-4) !important;
+  }
+
+  .theme-container .theme-main {
+    padding: 0 !important;
+  }
+
+  .theme-container .theme-main .series-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 256px !important;
+    min-width: 0 !important;
+    max-width: 256px !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    z-index: 50 !important;
+    padding: var(--space-5) !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease;
+  }
+
+  .theme-container .theme-main .page-container .page-content {
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: var(--space-4) !important;
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
+  }
+
+  .theme-container .theme-main .page-container .page-content .theme-reco-md-content {
+    max-width: none;
+  }
+}
+
+.page {
+  padding-bottom: var(--space-16);
+}

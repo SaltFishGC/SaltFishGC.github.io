@@ -1,45 +1,222 @@
-// .vuepress/plugins/mermaid.client.ts - Mermaid 图表渲染插件客户端部分
-// mermaid说明文档: https://mermaid.nodejs.cn/config/usage.html
-import { defineClientConfig } from '@vuepress/client'						// 导入 VuePress 客户端配置函数，用于定义客户端增强
-import { h, defineComponent } from 'vue'												// 导入 Vue 的 h 函数（用于创建虚拟 DOM 节点）和 defineComponent 函数（用于定义组件）
-import mermaid from 'mermaid'                   						  	// 导入 mermaid 库，用于渲染流程图、序列图等图表
+import { h, defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 
-// 初始化 mermaid 库配置，这些配置将在客户端执行
-mermaid.initialize({
-  startOnLoad: false,  			// 页面加载时不自动渲染，由我们手动控制渲染时机
-  theme: 'default',    			// 使用默认主题样式
-  securityLevel: 'loose' 		// 设置安全级别为宽松，允许更多功能（注意安全风险）
-})
+const MERMAID_THEMES = {
+  light: {
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#7c6aef',
+      primaryTextColor: '#ffffff',
+      primaryBorderColor: '#6350d9',
+      secondaryColor: '#f0eeff',
+      tertiaryColor: '#f8f7ff',
+      background: '#ffffff',
+      mainBkg: '#7c6aef',
+      nodeBkg: '#7c6aef',
+      nodeBorder: '#6350d9',
+      nodeTextColor: '#ffffff',
+      lineColor: '#9d8df5',
+      arrowheadColor: '#6350d9',
+      defaultLinkColor: '#9d8df5',
+      clusterBkg: 'rgba(124, 106, 239, 0.06)',
+      clusterBorder: 'rgba(124, 106, 239, 0.20)',
+      titleColor: '#18181b',
+      textColor: '#18181b',
+      edgeLabelBackground: '#ffffff',
+      fontFamily: '"Geist", "SF Pro Text", "PingFang SC", sans-serif',
+      fontSize: '14px',
+      cScale0: '#7c6aef', cScale1: '#22b4c8', cScale2: '#3c64dc',
+      cScale3: '#b43c8c', cScale4: '#32b464', cScale5: '#dc6432',
+      cScale6: '#c8a422', cScale7: '#643cdc', cScale8: '#22c8a4',
+      actorBkg: 'rgba(124, 106, 239, 0.08)',
+      actorBorder: '#9d8df5',
+      actorTextColor: '#18181b',
+      activationBkgColor: 'rgba(124, 106, 239, 0.15)',
+      activationBorderColor: '#9d8df5',
+      noteBkgColor: 'rgba(34, 180, 200, 0.08)',
+      noteBorderColor: '#22b4c8',
+      noteTextColor: '#18181b',
+      taskBkgColor: 'rgba(124, 106, 239, 0.25)',
+      taskBorderColor: '#9d8df5',
+      activeTaskBkgColor: '#7c6aef',
+      activeTaskBorderColor: '#6350d9',
+      doneTaskBkgColor: 'rgba(34, 180, 200, 0.20)',
+      doneTaskBorderColor: '#22b4c8',
+      gridColor: 'rgba(0, 0, 0, 0.06)',
+      sectionBkgColor: 'rgba(124, 106, 239, 0.06)',
+      sectionBkgColor2: 'rgba(34, 180, 200, 0.06)',
+    },
+    themeCSS: `
+      .node rect, .node circle, .node ellipse, .node polygon {
+        rx: 10; ry: 10;
+        transition: filter 0.3s ease, stroke-width 0.3s ease;
+      }
+      .node:hover rect, .node:hover circle, .node:hover ellipse {
+        filter: drop-shadow(0 4px 16px rgba(124,106,239,0.20));
+        stroke-width: 2px;
+      }
+      .cluster rect { rx: 14; ry: 14; }
+      .edgePath .path { stroke-width: 1.8px; }
+      .edgeLabel { font-size: 12px; }
+    `,
+  },
+  dark: {
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#7c6aef',
+      primaryTextColor: '#ffffff',
+      primaryBorderColor: '#9d8df5',
+      secondaryColor: '#1e1e32',
+      tertiaryColor: '#14142a',
+      background: '#0d0d1a',
+      mainBkg: '#7c6aef',
+      nodeBkg: '#7c6aef',
+      nodeBorder: '#9d8df5',
+      nodeTextColor: '#ffffff',
+      lineColor: '#8b7cf5',
+      arrowheadColor: '#9d8df5',
+      defaultLinkColor: '#9d8df5',
+      clusterBkg: 'rgba(124, 106, 239, 0.08)',
+      clusterBorder: 'rgba(157, 141, 245, 0.25)',
+      titleColor: '#ffffff',
+      textColor: '#e0e0e8',
+      edgeLabelBackground: 'rgba(20, 20, 42, 0.95)',
+      fontFamily: '"Geist", "SF Pro Text", "PingFang SC", sans-serif',
+      fontSize: '14px',
+      cScale0: '#7c6aef', cScale1: '#22b4c8', cScale2: '#3c64dc',
+      cScale3: '#b43c8c', cScale4: '#32b464', cScale5: '#dc6432',
+      cScale6: '#c8a422', cScale7: '#643cdc', cScale8: '#22c8a4',
+      actorBkg: 'rgba(124, 106, 239, 0.12)',
+      actorBorder: '#9d8df5',
+      actorTextColor: '#e0e0e8',
+      actorLineColor: '#8b7cf5',
+      activationBkgColor: 'rgba(124, 106, 239, 0.25)',
+      activationBorderColor: '#9d8df5',
+      noteBkgColor: 'rgba(34, 180, 200, 0.12)',
+      noteBorderColor: '#22b4c8',
+      noteTextColor: '#e0e0e8',
+      signalColor: '#9d8df5',
+      signalTextColor: '#e0e0e8',
+      taskBkgColor: 'rgba(124, 106, 239, 0.30)',
+      taskBorderColor: '#9d8df5',
+      activeTaskBkgColor: '#7c6aef',
+      activeTaskBorderColor: '#9d8df5',
+      doneTaskBkgColor: 'rgba(34, 180, 200, 0.25)',
+      doneTaskBorderColor: '#22b4c8',
+      gridColor: 'rgba(224, 224, 232, 0.08)',
+      sectionBkgColor: 'rgba(124, 106, 239, 0.10)',
+      sectionBkgColor2: 'rgba(34, 180, 200, 0.10)',
+      stateBkg: 'rgba(124, 106, 239, 0.15)',
+      transitionColor: '#9d8df5',
+      compositeBackground: 'rgba(124, 106, 239, 0.08)',
+      compositeTitleBackground: 'rgba(124, 106, 239, 0.18)',
+      archEdgeColor: '#9d8df5',
+      archEdgeArrowColor: '#9d8df5',
+      archGroupBorderColor: 'rgba(157, 141, 245, 0.30)',
+    },
+    themeCSS: `
+      .node rect, .node circle, .node ellipse, .node polygon {
+        rx: 10; ry: 10;
+        filter: drop-shadow(0 0 8px rgba(124,106,239,0.18));
+        transition: filter 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
+      }
+      .node:hover rect, .node:hover circle, .node:hover ellipse {
+        filter: drop-shadow(0 0 20px rgba(124,106,239,0.35));
+        stroke: #b4a8ff;
+        stroke-width: 2px;
+      }
+      .cluster rect {
+        rx: 14; ry: 14;
+        stroke-dasharray: 6 3;
+      }
+      .cluster-label text {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .edgePath .path {
+        stroke-width: 1.8px;
+        filter: drop-shadow(0 0 4px rgba(124,106,239,0.12));
+      }
+      .edgeLabel { font-size: 12px; }
+    `,
+  },
+}
 
-// 定义名为 MermaidDiagram 的 Vue 组件
-const MermaidDiagram = defineComponent({
-  props: ['code'],																							// 定义接收的 prop 属性，用于接收从父组件传递过来的 mermaid 代码
-  
-	// 组件挂载到 DOM 后执行的异步函数
-  async mounted() {
-    try {
-      const decoded = decodeURIComponent(this.code)							// 解码从 prop 传递过来的编码后的 mermaid 代码
-      const id = `mermaid-${Date.now()}`                				// 创建唯一的 ID，避免多个图表之间的冲突
-      const { svg } = await mermaid.render(id, decoded)					// 使用 mermaid 库渲染图表，返回 SVG 字符串
-      this.$el.innerHTML = svg																	// 将渲染好的 SVG 内容插入到当前组件的 DOM 元素中
-    } catch (err) {
-      console.error('Mermaid render error:', err)								// 如果渲染过程中出现错误，显示错误信息
-      this.$el.innerHTML = '<pre style="color:red">Mermaid 图表渲染失败</pre>'	// 在页面上显示渲染失败的提示信息
+function getIsDark() {
+  if (typeof document === 'undefined') return false
+  const html = document.documentElement
+  return html.getAttribute('data-theme') === 'dark' || html.classList.contains('dark')
+}
+
+let mermaidIdCounter = 0
+
+export const MermaidDiagram = defineComponent({
+  name: 'MermaidDiagram',
+  props: {
+    code: {
+      type: String,
+      default: '',
+    },
+  },
+  setup(props) {
+    const containerRef = ref<HTMLElement | null>(null)
+    let themeObserver: MutationObserver | null = null
+
+    async function renderDiagram() {
+      if (!containerRef.value || !props.code || !props.code.trim()) return
+      try {
+        const mermaid = (await import('mermaid')).default
+        const isDark = getIsDark()
+        const themeConfig = isDark ? MERMAID_THEMES.dark : MERMAID_THEMES.light
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'loose',
+          ...themeConfig,
+        })
+        const decoded = decodeURIComponent(props.code)
+        if (!decoded || !decoded.trim()) return
+        const id = `mermaid-${++mermaidIdCounter}-${Date.now()}`
+        const { svg } = await mermaid.render(id, decoded)
+        containerRef.value.innerHTML = svg
+      } catch (err) {
+        console.error('Mermaid render error:', err)
+        if (containerRef.value) {
+          containerRef.value.innerHTML = ''
+        }
+      }
+    }
+
+    onMounted(() => {
+      renderDiagram()
+      themeObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class') {
+            renderDiagram()
+            return
+          }
+        }
+      })
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme', 'class'],
+      })
+    })
+
+    onBeforeUnmount(() => {
+      if (themeObserver) {
+        themeObserver.disconnect()
+        themeObserver = null
+      }
+      if (containerRef.value) {
+        containerRef.value.innerHTML = ''
+      }
+    })
+
+    return () => {
+      if (!props.code || !props.code.trim()) return null
+      return h('div', {
+        ref: containerRef,
+        class: 'mermaid-diagram glass-mermaid',
+      })
     }
   },
-
-  // 定义组件的渲染函数，返回虚拟 DOM 结构
-  render() {
-    return h('div', { 																					// 返回一个 div 元素作为组件的根元素
-      class: 'mermaid-diagram',																	// 添加类名，用于样式化图表		
-      style: { textAlign: 'center' }   													// 添加样式使图表居中显示
-    })
-  },
-})
-
-// 导出客户端配置，定义如何增强 VuePress 客户端应用
-export default defineClientConfig({
-  enhance({ app }) {																						// enhance 函数在 Vue 应用启动时执行，用于注册组件、指令等
-    app.component('MermaidDiagram', MermaidDiagram)							// 将 MermaidDiagram 组件注册为全局组件，使其可以在任意 Markdown 文件中使用
-  }
 })

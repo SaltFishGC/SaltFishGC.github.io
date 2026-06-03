@@ -1,0 +1,139 @@
+html {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-size: var(--t-body);
+  line-height: 1.65;
+  color: var(--c-text-primary);
+  background: var(--bg-canvas);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--c-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--t-h1);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: var(--t-h2);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+h4 {
+  font-size: var(--t-h4);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+p {
+  line-height: 1.65;
+  color: var(--c-text-secondary);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono);
+}
+
+code {
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background: var(--c-fill-strong);
+  color: var(--c-text-accent);
+  font-size: 0.875em;
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+strong {
+  font-weight: 600;
+}
+
+small, .caption {
+  font-size: var(--t-caption);
+  letter-spacing: 0.02em;
+  color: var(--c-text-muted);
+}
+
+blockquote {
+  border-left: 3px solid var(--c-accent);
+  padding: var(--space-4) var(--space-6);
+  margin: var(--space-6) 0;
+  background: var(--c-fill-subtle);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--c-text-secondary);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--c-border-default);
+  margin: var(--space-8) 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-caption);
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--c-text-primary);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--c-border-strong);
+}
+
+td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--c-border-subtle);
+  color: var(--c-text-secondary);
+}
+
+tr:hover td {
+  background: var(--c-fill-subtle);
+}
+
+ul, ol {
+  padding-left: var(--space-6);
+  color: var(--c-text-secondary);
+}
+
+li {
+  margin: var(--space-1) 0;
+  line-height: 1.65;
+}
+
+.text-wrap-balance {
+  text-wrap: balance;
+}

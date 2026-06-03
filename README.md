@@ -1,6 +1,7 @@
 ---
 # 配置参考：https://theme-reco.vuejs.press/docs/theme/frontmatter-home.html
 home: true
+pageClass: home
 modules:
   - BannerBrand
   - Blog

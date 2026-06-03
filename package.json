@@ -6,11 +6,13 @@
   "author": "reco_luan <recoluan@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "vuepress dev .",
-    "start": "vuepress dev .",
-    "build": "vuepress build ."
+    "gen:series": "node scripts/generate-series.mjs",
+    "dev": "npm run gen:series && vuepress dev .",
+    "start": "npm run gen:series && vuepress dev .",
+    "build": "npm run gen:series && vuepress build ."
   },
   "dependencies": {
+    "gsap": "^3.15.0",
     "mermaid": "^11.12.2",
     "vue": "^3.4.21",
     "vuepress": "^2.0.0-rc.19",
