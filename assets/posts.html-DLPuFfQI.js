@@ -1,0 +1,1 @@
+import{b as t,c as e,o}from"./app-9EpopRw3.js";const s={};function a(c,n){return o(),e("div")}const l=t(s,[["render",a]]),p=JSON.parse('{"path":"/posts.html","title":"","lang":"en-US","frontmatter":{"layout":"Posts"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,p as data};
