@@ -1,0 +1,1 @@
+import{d as t,e,o as a}from"./app-CMccFqkc.js";const o={};function r(n,s){return a(),e("div")}const l=t(o,[["render",r]]),i=JSON.parse('{"path":"/tags/shixi/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,i as data};

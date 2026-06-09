@@ -1,1 +1,0 @@
-import{b as e,c as o,e as n,o as a}from"./app-9EpopRw3.js";const l={};function r(s,t){return a(),o("div",null,[...t[0]||(t[0]=[n("p",null,"404 Not Found",-1)])])}const d=e(l,[["render",r]]),i=JSON.parse('{"path":"/404.html","title":"","lang":"en-US","frontmatter":{"layout":"NotFound"},"headers":[],"git":{},"filePathRelative":null}');export{d as comp,i as data};

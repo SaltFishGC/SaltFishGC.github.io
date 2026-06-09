@@ -1,0 +1,1 @@
+import{d as e,e as t,o as a}from"./app-CMccFqkc.js";const o={};function r(n,c){return a(),t("div")}const l=e(o,[["render",r]]),_=JSON.parse('{"path":"/tags/boke/1.html","title":"","lang":"en-US","frontmatter":{"layout":"Categories"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,_ as data};

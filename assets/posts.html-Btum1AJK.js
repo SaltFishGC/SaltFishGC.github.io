@@ -1,0 +1,1 @@
+import{d as t,e,o}from"./app-CMccFqkc.js";const s={};function a(n,r){return o(),e("div")}const l=t(s,[["render",a]]),p=JSON.parse('{"path":"/posts.html","title":"","lang":"en-US","frontmatter":{"layout":"Posts"},"headers":[],"git":{},"filePathRelative":null}');export{l as comp,p as data};
