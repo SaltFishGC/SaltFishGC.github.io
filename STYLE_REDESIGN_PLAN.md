@@ -4,24 +4,24 @@
 >
 > 基于 14 份前端 Skill 规则 + VuePress theme-reco 实际约束优化
 
----
+***
 
 ## 0. Skill 规则合规声明
 
 本方案严格遵循以下 Skill 的强制规则:
 
-| Skill | 核心约束 | 本方案合规点 |
-|-------|---------|------------|
-| high-end-visual-design | Double-Bezel架构、自定义cubic-bezier、磁性悬停 | 卡片双层嵌套、弹簧曲线、按钮磁性效果 |
-| design-taste-frontend | Three Dials(8/6/4)、LILA规则、色彩一致性锁 | 非对称布局、单强调色、统一灰调家族 |
-| gpt-taste | AIDA结构、无缝Bento网格、GSAP ScrollTrigger | 首页AIDA叙事、grid-flow:dense、滚动编排 |
-| imagegen-frontend-web | 每节一图、Hero极简、组合变化引擎 | Hero 1-3行标题、节节奏变化 |
-| redesign-existing-projects | 扫描-诊断-修复、修复优先级顺序 | 按字体-色板-交互-布局-组件-状态-打磨顺序 |
-| minimalist-ui | 禁Inter/Roboto、柔和粉彩强调、便当盒网格 | Geist字体、去饱和强调色、Bento布局 |
-| industrial-brutalist-ui | 刚性网格、极端排版对比、1px分隔线 | CSS Grid骨架、Display vs Body极端对比 |
-| stitch-design-taste | 1强调色<80%饱和、弹簧物理、交错级联 | 单强调色、cubic-bezier弹簧、stagger入场 |
-| brandkit | 品牌隐喻、色彩纪律、极少文本 | 深渊极光隐喻、受控色板、精简文案 |
-| full-output-enforcement | 完整输出、禁止省略号占位 | 实施时每个文件完整输出 |
+| Skill                      | 核心约束                                | 本方案合规点                         |
+| -------------------------- | ----------------------------------- | ------------------------------ |
+| high-end-visual-design     | Double-Bezel架构、自定义cubic-bezier、磁性悬停 | 卡片双层嵌套、弹簧曲线、按钮磁性效果             |
+| design-taste-frontend      | Three Dials(8/6/4)、LILA规则、色彩一致性锁    | 非对称布局、单强调色、统一灰调家族              |
+| gpt-taste                  | AIDA结构、无缝Bento网格、GSAP ScrollTrigger | 首页AIDA叙事、grid-flow:dense、滚动编排  |
+| imagegen-frontend-web      | 每节一图、Hero极简、组合变化引擎                  | Hero 1-3行标题、节节奏变化              |
+| redesign-existing-projects | 扫描-诊断-修复、修复优先级顺序                    | 按字体-色板-交互-布局-组件-状态-打磨顺序        |
+| minimalist-ui              | 禁Inter/Roboto、柔和粉彩强调、便当盒网格          | Geist字体、去饱和强调色、Bento布局         |
+| industrial-brutalist-ui    | 刚性网格、极端排版对比、1px分隔线                  | CSS Grid骨架、Display vs Body极端对比 |
+| stitch-design-taste        | 1强调色<80%饱和、弹簧物理、交错级联                | 单强调色、cubic-bezier弹簧、stagger入场  |
+| brandkit                   | 品牌隐喻、色彩纪律、极少文本                      | 深渊极光隐喻、受控色板、精简文案               |
+| full-output-enforcement    | 完整输出、禁止省略号占位                        | 实施时每个文件完整输出                    |
 
 ### 全局禁止清单
 
@@ -42,33 +42,33 @@
 - 响应式: 移动优先单列折叠 / 44px触摸目标 / clamp()排版缩放
 - 语义: 语义HTML / 无障碍焦点环 / skip-to-content链接
 
----
+***
 
 ## 1. 项目现状诊断
 
 ### 1.1 技术栈
 
-| 组件 | 版本 | 说明 |
-|------|------|------|
-| VuePress | 2.0.0-rc.19 | RC版，API可能不稳定 |
-| vuepress-theme-reco | 2.0.0-rc.26 | 内置Tailwind CSS 3.4.4 |
-| Vue | ^3.5.13 | Vue 3 Composition API |
-| Vite | via @vuepress/bundler-vite | 打包器 |
-| Mermaid | ^11.12.2 | 唯一自定义插件 |
+| 组件                  | 版本                         | 说明                    |
+| ------------------- | -------------------------- | --------------------- |
+| VuePress            | 2.0.0-rc.19                | RC版，API可能不稳定          |
+| vuepress-theme-reco | 2.0.0-rc.26                | 内置Tailwind CSS 3.4.4  |
+| Vue                 | ^3.5.13                    | Vue 3 Composition API |
+| Vite                | via @vuepress/bundler-vite | 打包器                   |
+| Mermaid             | ^11.12.2                   | 唯一自定义插件               |
 
 ### 1.2 当前问题诊断
 
-| 问题类别 | 严重度 | 具体问题 |
-|---------|--------|---------|
-| 字体 | 严重 | 使用系统默认字体，无品牌字体 |
-| 色彩 | 严重 | 零CSS变量，全部硬编码；彩虹渐变主页；混合冷暖灰 |
-| 布局 | 严重 | 无CSS Grid，rely on !important覆盖；3等宽卡片 |
-| 交互 | 严重 | 无hover/active/focus状态；无触觉反馈；无焦点环 |
-| 动效 | 中等 | 仅有简单gradientBG动画，无滚动动画，通用ease缓动 |
-| 排版 | 中等 | 无字号层级系统，正文无max-width限制 |
-| 组件 | 中等 | 无自定义组件，无布局覆盖，无客户端增强(除mermaid) |
-| 性能 | 低 | body::before动画用transform(正确)，但blur值过大 |
-| 可访问性 | 低 | 无焦点环，无skip-to-content |
+| 问题类别 | 严重度 | 具体问题                                  |
+| ---- | --- | ------------------------------------- |
+| 字体   | 严重  | 使用系统默认字体，无品牌字体                        |
+| 色彩   | 严重  | 零CSS变量，全部硬编码；彩虹渐变主页；混合冷暖灰             |
+| 布局   | 严重  | 无CSS Grid，rely on !important覆盖；3等宽卡片  |
+| 交互   | 严重  | 无hover/active/focus状态；无触觉反馈；无焦点环      |
+| 动效   | 中等  | 仅有简单gradientBG动画，无滚动动画，通用ease缓动       |
+| 排版   | 中等  | 无字号层级系统，正文无max-width限制                |
+| 组件   | 中等  | 无自定义组件，无布局覆盖，无客户端增强(除mermaid)         |
+| 性能   | 低   | body::before动画用transform(正确)，但blur值过大 |
+| 可访问性 | 低   | 无焦点环，无skip-to-content                 |
 
 ### 1.3 theme-reco 约束
 
@@ -90,7 +90,7 @@
 6. 添加加载/空/错误状态
 7. 打磨排版比例和间距
 
----
+***
 
 ## 2. 设计系统
 
@@ -99,6 +99,7 @@
 > 咸鱼沉入深海，极光从深渊升起 -- 技术博客如同深海中的发光生物，在黑暗中散发智慧的光芒
 
 核心意象:
+
 - 深海: 极暗背景，深邃而宁静
 - 极光: 流动的色彩光带，持续而克制
 - 生物发光: 微粒和光点，如深海浮游生物
@@ -106,15 +107,16 @@
 
 ### 2.2 Three Dials 配置
 
-| Dial | 值 | 说明 |
-|------|-----|------|
-| DESIGN_VARIANCE | 8 | 非对称/艺术感布局，每节不同 |
-| MOTION_INTENSITY | 6 | 流畅动效，弹簧物理，但不过度 |
-| VISUAL_DENSITY | 4 | 平衡密度，大量留白，内容聚焦 |
+| Dial              | 值 | 说明             |
+| ----------------- | - | -------------- |
+| DESIGN\_VARIANCE  | 8 | 非对称/艺术感布局，每节不同 |
+| MOTION\_INTENSITY | 6 | 流畅动效，弹簧物理，但不过度 |
+| VISUAL\_DENSITY   | 4 | 平衡密度，大量留白，内容聚焦 |
 
 ### 2.3 色彩系统
 
 设计原则:
+
 - 1个主强调色，饱和度 < 80%
 - 统一冷灰调家族(全部基于Zinc)
 - 极光色仅用于背景装饰，不用于UI元素
@@ -209,16 +211,16 @@ html[data-theme="light"],
 
 字号层级:
 
-| 层级 | 变量 | 值 | 行高 | 字重 | 字间距 | 用途 |
-|------|------|-----|------|------|--------|------|
-| Display | --t-display | clamp(2.25rem, 5vw, 3.75rem) | 1.05 | 800 | -0.03em | Hero大标题 |
-| H1 | --t-h1 | clamp(1.75rem, 3vw, 2.25rem) | 1.15 | 700 | -0.025em | 页面主标题 |
-| H2 | --t-h2 | 1.5rem | 1.25 | 600 | -0.02em | 章节标题 |
-| H3 | --t-h3 | 1.25rem | 1.35 | 600 | -0.01em | 子章节 |
-| H4 | --t-h4 | 1.125rem | 1.4 | 500 | 0 | 小标题 |
-| Body | --t-body | 1rem | 1.65 | 400 | 0 | 正文(max-width: 65ch) |
-| Caption | --t-caption | 0.8125rem | 1.5 | 400 | 0.02em | 标签/元数据 |
-| Mono | --t-mono | 0.875rem | 1.6 | 400 | 0 | 代码/数据 |
+| 层级      | 变量          | 值                            | 行高   | 字重  | 字间距      | 用途                  |
+| ------- | ----------- | ---------------------------- | ---- | --- | -------- | ------------------- |
+| Display | --t-display | clamp(2.25rem, 5vw, 3.75rem) | 1.05 | 800 | -0.03em  | Hero大标题             |
+| H1      | --t-h1      | clamp(1.75rem, 3vw, 2.25rem) | 1.15 | 700 | -0.025em | 页面主标题               |
+| H2      | --t-h2      | 1.5rem                       | 1.25 | 600 | -0.02em  | 章节标题                |
+| H3      | --t-h3      | 1.25rem                      | 1.35 | 600 | -0.01em  | 子章节                 |
+| H4      | --t-h4      | 1.125rem                     | 1.4  | 500 | 0        | 小标题                 |
+| Body    | --t-body    | 1rem                         | 1.65 | 400 | 0        | 正文(max-width: 65ch) |
+| Caption | --t-caption | 0.8125rem                    | 1.5  | 400 | 0.02em   | 标签/元数据              |
+| Mono    | --t-mono    | 0.875rem                     | 1.6  | 400 | 0        | 代码/数据               |
 
 ### 2.5 间距系统
 
@@ -279,7 +281,7 @@ html[data-theme="light"],
 
 弹簧物理参数(GSAP): `stiffness: 100, damping: 20`
 
----
+***
 
 ## 3. VuePress 集成架构
 
@@ -399,7 +401,7 @@ import CursorGlow from '../components/CursorGlow.vue'
 </script>
 ```
 
----
+***
 
 ## 4. 核心视觉效果
 
@@ -734,7 +736,7 @@ export default defineClientConfig({
 }
 ```
 
----
+***
 
 ## 5. 交互与动画系统
 
@@ -1002,7 +1004,7 @@ a:active {
 }
 ```
 
----
+***
 
 ## 6. 页面设计
 
@@ -1060,6 +1062,7 @@ a:active {
 ```
 
 关键设计规则:
+
 - Hero标题左对齐，1-3行，大量留白
 - Bento网格使用 `grid-flow: dense`，非对称比例(2:1:1 / 1:1:2)
 - 相邻节反转非对称方向，避免重复
@@ -1068,7 +1071,7 @@ a:active {
 
 ### 6.2 文章详情页
 
-```
+````
 +-------------------------------------------------------------+
 |  Navbar [Logo] [主页] [Blog] [笔记 v] [主题切换]            |
 +-------------------------------------------------------------+
@@ -1095,7 +1098,7 @@ a:active {
 |          |  评论区 (Giscus)             |                  |
 |          |                              |                  |
 +----------+------------------------------+------------------+
-```
+````
 
 ### 6.3 文章列表页
 
@@ -1127,89 +1130,89 @@ a:active {
 +-------------------------------------------------------------+
 ```
 
----
+***
 
 ## 7. 实施阶段
 
 ### P0: 基础设施 (必须)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| 创建CSS变量系统 | styles/variables.css | 2.3-2.7节全部变量 |
-| 创建排版样式 | styles/typography.css | 字体声明、字号层级、行高 |
-| 重写全局样式入口 | styles/index.css | @import所有子文件 |
-| 字体引入 | config.ts head | Geist Sans + Geist Mono + LXGW WenKai |
-| 删除旧index.css | styles/index.css | 清除所有硬编码颜色和!important |
+| 任务           | 文件                    | 说明                                    |
+| ------------ | --------------------- | ------------------------------------- |
+| 创建CSS变量系统    | styles/variables.css  | 2.3-2.7节全部变量                          |
+| 创建排版样式       | styles/typography.css | 字体声明、字号层级、行高                          |
+| 重写全局样式入口     | styles/index.css      | @import所有子文件                          |
+| 字体引入         | config.ts head        | Geist Sans + Geist Mono + LXGW WenKai |
+| 删除旧index.css | styles/index.css      | 清除所有硬编码颜色和!important                  |
 
 验收标准: 页面使用新字体、新色板、新排版层级，无视觉回归
 
 ### P1: 核心视觉效果 (必须)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| 极光背景 | styles/aurora.css + components/AuroraBackground.vue | 4.1节 |
-| 噪点纹理 | components/GrainOverlay.vue | 4.2节 |
-| 玻璃拟态 | styles/glassmorphism.css | 4.3节 Double-Bezel |
-| 星尘粒子 | styles/aurora.css(内含) | 4.4节纯CSS方案 |
-| 导航栏玻璃 | styles/components.css | 覆盖reco导航栏样式 |
-| 滚动条 | styles/scrollbar.css | 自定义滚动条 |
+| 任务    | 文件                                                  | 说明                |
+| ----- | --------------------------------------------------- | ----------------- |
+| 极光背景  | styles/aurora.css + components/AuroraBackground.vue | 4.1节              |
+| 噪点纹理  | components/GrainOverlay.vue                         | 4.2节              |
+| 玻璃拟态  | styles/glassmorphism.css                            | 4.3节 Double-Bezel |
+| 星尘粒子  | styles/aurora.css(内含)                               | 4.4节纯CSS方案        |
+| 导航栏玻璃 | styles/components.css                               | 覆盖reco导航栏样式       |
+| 滚动条   | styles/scrollbar.css                                | 自定义滚动条            |
 
 验收标准: 极光流动、玻璃卡片、噪点纹理、星尘闪烁全部可见
 
 ### P2: 交互与动画 (重要)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| GSAP注册 | plugins/gsap.client.ts | 5.1节 |
-| 滚动揭示 | plugins/gsap.client.ts | .reveal元素入场 |
-| 阅读进度条 | components/ReadingProgress.vue + plugins/scroll-progress.client.ts | 5.2节 |
-| 鼠标光晕 | components/CursorGlow.vue + plugins/cursor-glow.client.ts | 4.5节 |
-| 微交互 | styles/components.css | 链接/按钮/卡片hover+active+focus |
-| 交错入场 | styles/animations.css | .stagger-reveal |
-| 页面过渡 | styles/animations.css | 5.4节 |
+| 任务     | 文件                                                                 | 说明                         |
+| ------ | ------------------------------------------------------------------ | -------------------------- |
+| GSAP注册 | plugins/gsap.client.ts                                             | 5.1节                       |
+| 滚动揭示   | plugins/gsap.client.ts                                             | .reveal元素入场                |
+| 阅读进度条  | components/ReadingProgress.vue + plugins/scroll-progress.client.ts | 5.2节                       |
+| 鼠标光晕   | components/CursorGlow\.vue + plugins/cursor-glow\.client.ts        | 4.5节                       |
+| 微交互    | styles/components.css                                              | 链接/按钮/卡片hover+active+focus |
+| 交错入场   | styles/animations.css                                              | .stagger-reveal            |
+| 页面过渡   | styles/animations.css                                              | 5.4节                       |
 
 验收标准: 滚动有动画、进度条跟随、鼠标有光晕、所有交互有反馈
 
 ### P3: 布局与组件 (重要)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| 布局覆盖 | layouts/Layout.vue | 注入全局组件 |
-| 客户端增强 | client.ts | 注册布局和插件 |
-| 首页Hero | styles/components.css | 非对称Hero + Glitch标题 |
-| Bento网格 | styles/components.css | 首页卡片网格 |
-| 文章卡片 | styles/components.css | Double-Bezel卡片 |
-| 故障效果 | styles/animations.css | 4.6节(仅Hero标题) |
+| 任务      | 文件                    | 说明                 |
+| ------- | --------------------- | ------------------ |
+| 布局覆盖    | layouts/Layout.vue    | 注入全局组件             |
+| 客户端增强   | client.ts             | 注册布局和插件            |
+| 首页Hero  | styles/components.css | 非对称Hero + Glitch标题 |
+| Bento网格 | styles/components.css | 首页卡片网格             |
+| 文章卡片    | styles/components.css | Double-Bezel卡片     |
+| 故障效果    | styles/animations.css | 4.6节(仅Hero标题)      |
 
 验收标准: 首页非对称布局、Bento网格、Glitch标题
 
 ### P4: 细节打磨 (增强)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| 代码块美化 | styles/components.css | 暗色代码块+复制按钮样式 |
-| 表格样式 | styles/components.css | 替代旧版硬编码边框 |
-| 引用块 | styles/components.css | 左侧强调色边框 |
-| 目录跟随 | plugins/gsap.client.ts | TOC高亮当前章节 |
-| 图片灯箱 | 利用reco内置medium-zoom | 样式微调 |
-| 搜索框 | styles/components.css | 玻璃拟态搜索框 |
-| 404页面 | styles/components.css | 创意404 |
+| 任务    | 文件                     | 说明           |
+| ----- | ---------------------- | ------------ |
+| 代码块美化 | styles/components.css  | 暗色代码块+复制按钮样式 |
+| 表格样式  | styles/components.css  | 替代旧版硬编码边框    |
+| 引用块   | styles/components.css  | 左侧强调色边框      |
+| 目录跟随  | plugins/gsap.client.ts | TOC高亮当前章节    |
+| 图片灯箱  | 利用reco内置medium-zoom    | 样式微调         |
+| 搜索框   | styles/components.css  | 玻璃拟态搜索框      |
+| 404页面 | styles/components.css  | 创意404        |
 
 验收标准: 所有内容元素有统一风格
 
 ### P5: 高级效果 (锦上添花)
 
-| 任务 | 文件 | 说明 |
-|------|------|------|
-| tsParticles | plugins/particles.client.ts | 交互式粒子(仅首页) |
-| 视差效果 | plugins/gsap.client.ts | data-speed属性元素 |
-| 打字机效果 | components/TypeWriter.vue | Hero副标题 |
-| 评论系统 | config.ts | 启用Giscus |
-| 流体模拟 | 可选 | Three.js(仅首页Hero，性能允许时) |
+| 任务          | 文件                          | 说明                      |
+| ----------- | --------------------------- | ----------------------- |
+| tsParticles | plugins/particles.client.ts | 交互式粒子(仅首页)              |
+| 视差效果        | plugins/gsap.client.ts      | data-speed属性元素          |
+| 打字机效果       | components/TypeWriter.vue   | Hero副标题                 |
+| 评论系统        | config.ts                   | 启用Giscus                |
+| 流体模拟        | 可选                          | Three.js(仅首页Hero，性能允许时) |
 
 验收标准: 首页交互粒子、打字机效果
 
----
+***
 
 ## 8. 性能与可访问性
 
@@ -1270,43 +1273,45 @@ a:active {
 - `aria-hidden="true"` 用于装饰性元素(极光、粒子、噪点)
 - `min-height: 100dvh` 代替 `100vh`(防止iOS Safari跳动)
 
----
+***
 
 ## 9. 依赖清单
 
-| 库 | 用途 | 大小 | 阶段 |
-|----|------|------|------|
-| gsap | 滚动动画、视差、进度条 | ~25KB gzip | P2 |
-| @tsparticles/vue3 + @tsparticles/slim | 交互粒子(可选) | ~30KB gzip | P5 |
-| three | 流体模拟(可选，仅首页) | ~150KB gzip | P5 |
+| 库                                     | 用途           | 大小           | 阶段 |
+| ------------------------------------- | ------------ | ------------ | -- |
+| gsap                                  | 滚动动画、视差、进度条  | \~25KB gzip  | P2 |
+| @tsparticles/vue3 + @tsparticles/slim | 交互粒子(可选)     | \~30KB gzip  | P5 |
+| three                                 | 流体模拟(可选，仅首页) | \~150KB gzip | P5 |
 
 字体依赖(Google Fonts CDN):
+
 - Geist Sans: 400/500/600/700/800
 - Geist Mono: 400/500/600
 - LXGW WenKai: 400
 
----
+***
 
 ## 10. 参考资源
 
-| 类别 | 资源 | 链接 |
-|------|------|------|
-| 设计灵感 | Obys Agency | https://obys.agency |
-| 设计灵感 | Superlist | https://superlist.com |
-| 设计灵感 | Refraction | https://refraction.dev |
-| 设计灵感 | chriskalafatis.com | https://chriskalafatis.com |
-| CSS效果 | CSS极光实现 | https://www.cnblogs.com/coco1s/p/15722286.html |
-| CSS效果 | CSS渐变趋势2025 | https://csstoolbox.net/blog-gradient-design-trends-2025 |
-| CSS效果 | 玻璃拟态教程 | https://natebal.com/glassmorphism-web-design/ |
-| 粒子系统 | tsParticles | https://github.com/matteobruni/tsparticles |
-| 3D/Shader | Three.js流体模拟 | https://ics.media/entry/250916/ |
-| 动画库 | GSAP ScrollTrigger | https://gsap.com/docs/v3/Plugins/ScrollTrigger/ |
-| 博客主题 | Cyberpunk2077 | https://github.com/ceeyu/hexo-theme-cyberpunk2077 |
-| 博客主题 | VuePress Plume | https://theme-plume.vuejs.press |
-| 博客主题 | VuePress Reco | https://vuepress-theme-reco.recoluan.com |
-| 字体 | Geist Sans | https://vercel.com/font |
-| 字体 | LXGW WenKai | https://github.com/lxgw/LxgwWenKai |
+| 类别        | 资源                 | 链接                                                        |
+| --------- | ------------------ | --------------------------------------------------------- |
+| 设计灵感      | Obys Agency        | <https://obys.agency>                                     |
+| 设计灵感      | Superlist          | <https://superlist.com>                                   |
+| 设计灵感      | Refraction         | <https://refraction.dev>                                  |
+| 设计灵感      | chriskalafatis.com | <https://chriskalafatis.com>                              |
+| CSS效果     | CSS极光实现            | <https://www.cnblogs.com/coco1s/p/15722286.html>          |
+| CSS效果     | CSS渐变趋势2025        | <https://csstoolbox.net/blog-gradient-design-trends-2025> |
+| CSS效果     | 玻璃拟态教程             | <https://natebal.com/glassmorphism-web-design/>           |
+| 粒子系统      | tsParticles        | <https://github.com/matteobruni/tsparticles>              |
+| 3D/Shader | Three.js流体模拟       | <https://ics.media/entry/250916/>                         |
+| 动画库       | GSAP ScrollTrigger | <https://gsap.com/docs/v3/Plugins/ScrollTrigger/>         |
+| 博客主题      | Cyberpunk2077      | <https://github.com/ceeyu/hexo-theme-cyberpunk2077>       |
+| 博客主题      | VuePress Plume     | <https://theme-plume.vuejs.press>                         |
+| 博客主题      | VuePress Reco      | <https://vuepress-theme-reco.recoluan.com>                |
+| 字体        | Geist Sans         | <https://vercel.com/font>                                 |
+| 字体        | LXGW WenKai        | <https://github.com/lxgw/LxgwWenKai>                      |
 
----
+***
 
 > 最终目标: 让每一个访问 SaltFishGC Blog 的人都发出惊叹，同时保持工程品质和可访问性标准
+

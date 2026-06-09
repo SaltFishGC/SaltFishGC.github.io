@@ -22,6 +22,13 @@ export default defineUserConfig({
     lastUpdatedText: "",
     colorMode: 'dark', // dark, light, 默认 auto
     colorModeSwitch: true, // 是否展示颜色模式开关，默认 true
+    autoSetBlogCategories: true,
+    autoAddCategoryToNavbar: {
+      location: 2,
+      showIcon: true,
+    },
+    categoriesText: '分类',
+    tagsText: '标签',
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico' }],
       ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -34,7 +41,7 @@ export default defineUserConfig({
     series: autoSeries,
     navbar: [
       { text: "主页", link: "/" },
-      { text: "Blog", link: "/categories/blog/1.html" },
+      { text: "时间线", link: "/timeline.html" },
       {
         text: "笔记",
         children: [

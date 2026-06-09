@@ -172,15 +172,30 @@ export const MermaidDiagram = defineComponent({
           securityLevel: 'loose',
           ...themeConfig,
         })
-        const decoded = decodeURIComponent(props.code)
+        // 自动预处理：给 edge label 中的特殊字符加引号
+        let decoded = decodeURIComponent(props.code)
         if (!decoded || !decoded.trim()) return
+        decoded = preprocessMermaidCode(decoded)
         const id = `mermaid-${++mermaidIdCounter}-${Date.now()}`
         const { svg } = await mermaid.render(id, decoded)
         containerRef.value.innerHTML = svg
       } catch (err) {
         console.error('Mermaid render error:', err)
         if (containerRef.value) {
-          containerRef.value.innerHTML = ''
+          // 显示友好的错误提示
+          const errorMsg = err instanceof Error ? err.message : String(err)
+          const shortError = errorMsg.split('\n')[0] // 只取第一行
+          containerRef.value.innerHTML = `
+            <div class="mermaid-error-container">
+              <div class="mermaid-error-icon">⚠️</div>
+              <div class="mermaid-error-title">图表渲染失败</div>
+              <div class="mermaid-error-hint">请检查 Mermaid 语法，特殊字符需用引号包裹</div>
+              <details class="mermaid-error-details">
+                <summary>查看详细错误</summary>
+                <pre>${shortError}</pre>
+              </details>
+            </div>
+          `
         }
       }
     }
@@ -220,3 +235,23 @@ export const MermaidDiagram = defineComponent({
     }
   },
 })
+
+/**
+ * 自动预处理 Mermaid 代码
+ * 给 edge label 中包含特殊字符的文本加双引号
+ * 匹配模式：-->|text| 或 -.->|text| 或 ==>|text| 等
+ * 特殊字符：@ # $ + = > < : ; / \
+ */
+function preprocessMermaidCode(code: string): string {
+  // 匹配 edge label: -->|...|, ---|...|, -.->|...|, ==>|...|
+  // 但不匹配已经用引号包裹的 -->|"..."|
+  const edgeLabelRegex = /(-+>?-+|==+>)\|([^"'][^|]*?)\|/g
+  const specialChars = /[@#$+=><:;\\/]/
+
+  return code.replace(edgeLabelRegex, (match, arrow, label) => {
+    if (specialChars.test(label)) {
+      return `${arrow}|"${label}"|`
+    }
+    return match
+  })
+}

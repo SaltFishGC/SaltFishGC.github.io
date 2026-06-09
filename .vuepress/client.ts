@@ -1,32 +1,29 @@
 import { defineClientConfig } from '@vuepress/client'
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vuepress/client'
+import { createPinia } from 'pinia'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AuroraBackground from './components/AuroraBackground.vue'
 import GrainOverlay from './components/GrainOverlay.vue'
 import CursorGlow from './components/CursorGlow.vue'
 import ReadingProgress from './components/ReadingProgress.vue'
+import ImageViewer from './components/ImageViewer.vue'
+import CodeBlockEnhancer from './components/CodeBlockEnhancer.vue'
 import { MermaidDiagram } from './plugins/mermaid.client'
+import { useSeriesStore } from './stores/series'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/**
- * Series 侧边栏状态管理
- *
- * 策略：
- * - 跨页导航（从非 series 页面进入）：默认全展开
- * - 页内导航（series 页面内点击链接）：保持用户的展开/收起状态
- * - 通过记录上一条路由是否属于 series 来区分两种情况
- */
-const seriesCollapsedState = new Map<string, boolean>()
-let wasOnSeriesPage = false
+const pinia = createPinia()
+
 let seriesObserver: MutationObserver | null = null
 let seriesClickHandler: ((e: Event) => void) | null = null
 let seriesRafId: number | null = null
 
 export default defineClientConfig({
   enhance({ app }) {
+    app.use(pinia)
     app.component('MermaidDiagram', MermaidDiagram)
   },
   setup() {
@@ -39,31 +36,37 @@ export default defineClientConfig({
       initParallax()
       initNavbarScroll()
       initCardMouseTracking()
+      initDarkModeTransition()
+      initTocScrollTracking()
 
       // 初始页面是否为 series 页面
-      wasOnSeriesPage = isSeriesRoute(route.path)
-      if (wasOnSeriesPage) {
+      const store = useSeriesStore()
+      const isSeries = isSeriesRoute(route.path)
+      if (isSeries) {
+        store.enterSeriesPage()
         initSeriesInteraction()
       }
 
       router.afterEach((to) => {
-        const isNowOnSeries = isSeriesRoute(to.path)
+        // 延迟执行，避免阻塞点击事件
+        requestAnimationFrame(() => {
+          const isNowOnSeries = isSeriesRoute(to.path)
+          const wasOnSeries = store.isOnSeriesPage
 
-        if (isNowOnSeries && wasOnSeriesPage) {
-          // 页内导航：保持状态
-          scheduleApplySeriesState()
-        } else if (isNowOnSeries && !wasOnSeriesPage) {
-          // 跨页进入 series：清空状态，默认全展开
-          seriesCollapsedState.clear()
-          scheduleEnsureExpanded()
-        }
+          if (isNowOnSeries && !wasOnSeries) {
+            store.clearState()
+            store.enterSeriesPage()
+            scheduleEnsureExpanded()
+          } else if (isNowOnSeries && wasOnSeries) {
+            scheduleApplySeriesState()
+          } else if (!isNowOnSeries) {
+            store.leaveSeriesPage()
+          }
 
-        wasOnSeriesPage = isNowOnSeries
-
-        // 重新绑定交互（SPA 导航后 DOM 可能重建）
-        if (isNowOnSeries) {
-          setTimeout(() => initSeriesInteraction(), 100)
-        }
+          if (isNowOnSeries) {
+            setTimeout(() => initSeriesInteraction(), 150)
+          }
+        })
       })
     })
 
@@ -80,14 +83,18 @@ export default defineClientConfig({
     GrainOverlay,
     CursorGlow,
     ReadingProgress,
+    ImageViewer,
+    CodeBlockEnhancer,
   ],
 })
 
+// ==================== 路由判断 ====================
+
 function isSeriesRoute(path: string): boolean {
-  // series 页面特征：路径匹配 /docs/ 或 /blogs/ 等，且页面有 .series-container
-  // 简单判断：路径包含 /docs/ 或 /blogs/ 或 /notes/
   return /\/(docs|blogs|notes|series)\//.test(path) || path === '/docs' || path === '/blogs' || path === '/notes'
 }
+
+// ==================== GSAP 动画 ====================
 
 function initScrollReveal() {
   const elements = document.querySelectorAll<HTMLElement>('.reveal')
@@ -153,8 +160,89 @@ function initCardMouseTracking() {
       const y = mouseEvent.clientY - rect.top
       card.style.setProperty('--mouse-x', `${x}px`)
       card.style.setProperty('--mouse-y', `${y}px`)
+      card.style.setProperty('--x', `${x}px`)
+      card.style.setProperty('--y', `${y}px`)
     })
   })
+}
+
+// ==================== 暗色模式过渡 ====================
+
+function initDarkModeTransition() {
+  // 只给关键元素加过渡，避免 * 选择器导致全页面重排卡顿
+  const style = document.createElement('style')
+  style.textContent = `
+    html.theme-transitioning {
+      transition: background-color 0.3s ease !important;
+    }
+    html.theme-transitioning body,
+    html.theme-transitioning .theme-container,
+    html.theme-transitioning .navbar-container,
+    html.theme-transitioning .page-content,
+    html.theme-transitioning .series-container,
+    html.theme-transitioning .page-catalog-container,
+    html.theme-transitioning .glass-card,
+    html.theme-transitioning .card {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+    }
+  `
+  document.head.appendChild(style)
+
+  // 只监听 data-theme 变化，不监听 class（避免导航时误触发）
+  let transitioning = false
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.attributeName === 'data-theme') {
+        if (transitioning) return
+        transitioning = true
+        document.documentElement.classList.add('theme-transitioning')
+        setTimeout(() => {
+          document.documentElement.classList.remove('theme-transitioning')
+          transitioning = false
+        }, 350)
+      }
+    }
+  })
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  })
+}
+
+// ==================== 目录滚动跟踪 ====================
+
+function initTocScrollTracking() {
+  const content = document.querySelector('.theme-reco-md-content')
+  if (!content) return
+
+  const headings = content.querySelectorAll('h1, h2, h3, h4')
+  if (headings.length === 0) return
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id
+          if (!id) return
+          // 更新目录 active 状态
+          const catalog = document.querySelector('.page-catalog-container')
+          if (!catalog) return
+          catalog.querySelectorAll('.active').forEach((el) => el.classList.remove('active'))
+          const link = catalog.querySelector(`a[href="#${id}"]`)
+          if (link) {
+            const parent = link.parentElement
+            if (parent) parent.classList.add('active')
+          }
+        }
+      })
+    },
+    {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0.1,
+    }
+  )
+
+  headings.forEach((heading) => observer.observe(heading))
 }
 
 // ==================== Series 侧边栏逻辑 ====================
@@ -165,19 +253,14 @@ function getSeriesItemKey(heading: Element): string {
   return `L1:${text}`
 }
 
-/**
- * 确保所有目录展开（跨页导航时使用）
- */
 function ensureAllExpanded() {
   const seriesContainer = document.querySelector('.series-container')
   if (!seriesContainer) return
 
-  // 移除所有 .series-collapsed 类
   seriesContainer.querySelectorAll('.series-collapsed').forEach((el) => {
     el.classList.remove('series-collapsed')
   })
 
-  // 确保 arrow 为 down，子列表 display: block
   const sections = seriesContainer.querySelectorAll('section.series-group.series-item')
   sections.forEach((section) => {
     const heading = section.querySelector(':scope > .series-heading.series-level-1')
@@ -196,15 +279,13 @@ function ensureAllExpanded() {
   })
 }
 
-/**
- * 应用持久化的折叠状态（页内导航时使用）
- */
 function applySeriesCollapsedState() {
   const seriesContainer = document.querySelector('.series-container')
   if (!seriesContainer) return
 
-  if (seriesCollapsedState.size === 0) {
-    // 没有记录的状态，默认全展开
+  const store = useSeriesStore()
+
+  if (!store.hasState) {
     ensureAllExpanded()
     return
   }
@@ -215,7 +296,7 @@ function applySeriesCollapsedState() {
     if (!heading) return
 
     const key = getSeriesItemKey(heading)
-    const isCollapsed = seriesCollapsedState.get(key) === true
+    const isCollapsed = store.isCollapsed(key)
 
     if (isCollapsed) {
       section.classList.add('series-collapsed')
@@ -243,12 +324,12 @@ function applySeriesCollapsedState() {
   })
 }
 
-/**
- * 捕获当前折叠状态到 Map
- */
 function captureSeriesToggleState() {
   const seriesContainer = document.querySelector('.series-container')
   if (!seriesContainer) return
+
+  const store = useSeriesStore()
+  const stateMap: Record<string, boolean> = {}
 
   const sections = seriesContainer.querySelectorAll('section.series-group.series-item')
   sections.forEach((section) => {
@@ -258,10 +339,11 @@ function captureSeriesToggleState() {
     const arrow = heading.querySelector('.arrow')
     if (arrow) {
       const key = getSeriesItemKey(heading)
-      const isCollapsed = arrow.classList.contains('right')
-      seriesCollapsedState.set(key, isCollapsed)
+      stateMap[key] = arrow.classList.contains('right')
     }
   })
+
+  store.setCollapsedAll(stateMap)
 }
 
 function scheduleEnsureExpanded() {
@@ -272,7 +354,7 @@ function scheduleEnsureExpanded() {
       if (remaining > 0) attempt(remaining - 1)
     })
   }
-  attempt(15)
+  attempt(5)
 }
 
 function scheduleApplySeriesState() {
@@ -283,18 +365,13 @@ function scheduleApplySeriesState() {
       if (remaining > 0) attempt(remaining - 1)
     })
   }
-  attempt(15)
+  attempt(5)
 }
 
-/**
- * 初始化 Series 交互：点击事件 + MutationObserver
- * 幂等操作：重复调用不会重复绑定
- */
 function initSeriesInteraction() {
   const seriesContainer = document.querySelector('.series-container')
   if (!seriesContainer) return
 
-  // 绑定点击事件（捕获用户折叠/展开操作）
   if (!seriesClickHandler) {
     seriesClickHandler = (e: Event) => {
       const target = e.target as Element
@@ -312,11 +389,9 @@ function initSeriesInteraction() {
     }
   }
 
-  // 先移除旧的监听（防止重复绑定）
   seriesContainer.removeEventListener('click', seriesClickHandler, true)
   seriesContainer.addEventListener('click', seriesClickHandler, true)
 
-  // MutationObserver：监听 DOM 变化后重新应用状态
   if (seriesObserver) {
     seriesObserver.disconnect()
   }
@@ -325,7 +400,8 @@ function initSeriesInteraction() {
   seriesObserver = new MutationObserver(() => {
     if (observerTimer) clearTimeout(observerTimer)
     observerTimer = setTimeout(() => {
-      if (seriesCollapsedState.size > 0) {
+      const store = useSeriesStore()
+      if (store.hasState) {
         applySeriesCollapsedState()
       } else {
         ensureAllExpanded()

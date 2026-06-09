@@ -18,5 +18,6 @@
 - 背景层：z-index: 0（.magic-card__bg）
 
 ## 详细设计参考
+- **本项目完整设计系统**：`.trae/skills/sci-fi-aurora-glassmorphism/SKILL.md`（首选参考）
 - 样式设计参考 `.trae/skills/high-end-visual-design/SKILL.md`
 - 动效参考 `.trae/skills/gpt-taste/SKILL.md`
